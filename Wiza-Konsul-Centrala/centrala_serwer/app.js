@@ -1,40 +1,30 @@
-const mongoose = require("mongoose");
-const Fawn = require("fawn");
-Fawn.init(mongoose);
+require('./src/data/db')
+const Joi = require('joi');
+Joi.ObjectId = require('joi-objectid')(Joi);
+const express = require('express');
+const app = express();
+const bodyParser = require('body-parser');
+const helmet = require('helmet');
+const morgan = require('morgan');
+const cors = require('cors')
 
-const dburl = "mongodb+srv://admin:admin@centrala-gb7a4.mongodb.net/Centrala?retryWrites=true&w=majority";
-mongoose.connect(dburl, {
-    useNewUrlParser: true,
-    useUnifiedTopology: true
-});
-mongoose.connection.on("connected", function () {
-    console.log("Mongoose connected to " + dburl);
-});
-mongoose.connection.on("disconnected", function () {
-    console.log("Mongoose disconnected");
-});
-mongoose.connection.on("error", function (err) {
-    console.log("Mongoose connection error " + err);
-});
+const sprawy = require('./src/routes/sprawy');
 
-var sprawySchema = new mongoose.Schema({
-    Imie: String,
-    Nazwisko: String,
-}, {
-    collection: 'Sprawy'
-});
-var Sprawy = mongoose.model('Sprawy', sprawySchema);
+app.set('port', 5000);
+app.use(cors({
+    origin: true,
+    credentials: true
+}))
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({
+    extended: true
+}));
+app.use(morgan('tiny'));
+app.use(helmet());
 
-var s1 = new Sprawy({
-    Imie: 'Pioterek',
-    Nazwisko: 'Piotrowski'
+app.use('/api/sprawy', sprawy);
 
-});
-s1.save(function (err, sprawa) {
-    if (err) return console.error(err);
-});
-
-Sprawy.find(function (err, sprawa) {
-    if (err) return console.error(err);
-    console.log(sprawa);
+let server = app.listen(app.get('port'), () => {
+    var port = server.address().port;
+    console.log('All run on port: ' + port)
 })
