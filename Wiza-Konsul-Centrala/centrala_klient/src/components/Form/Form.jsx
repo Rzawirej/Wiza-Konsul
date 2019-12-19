@@ -1,5 +1,6 @@
 import React from 'react';
 import axios from 'axios';
+import FormView from "./FormView";
 
 class Form extends React.Component{
     constructor(props){
@@ -29,27 +30,21 @@ class Form extends React.Component{
   }
   
   async saveSprawa(sprawa){
-     console.log('Podano następujące imię: ' + sprawa.imie + '\nPodano następujące nazwisko: ' + sprawa.nazwisko);
     try {
       const response = await axios.post('/sprawy', {imie: sprawa.imie, nazwisko: sprawa.nazwisko});
     } catch (e) {
-    console.log(JSON.parse(JSON.stringify(e)));
+      console.log(JSON.parse(JSON.stringify(e)));
     }
   }
 
   render() {
     return (
-      <form onSubmit={this.handleSubmit}>
-        <label>
-          Imię:
-          <input name="imie" type="text" value={this.state.imie} onChange={this.handleChange} />
-        </label>
-        <label>
-          Nazwisko:
-          <input name="nazwisko" type="text" value={this.state.nazwisko} onChange={this.handleChange} />
-        </label>
-        <input type="submit" value="Wyślij" />
-      </form>
+      <FormView
+        handleSubmit={this.handleSubmit}
+        imie={this.state.imie}
+        nazwisko={this.state.nazwisko}
+        handleChange={this.handleChange}
+      />
     );
   }
 }

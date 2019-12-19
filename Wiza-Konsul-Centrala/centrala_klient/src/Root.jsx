@@ -1,5 +1,5 @@
 import React from 'react';
-import Form from './components/Form';
+import Form from './components/Form/Form';
 import axios from 'axios';
 import SprawyList from './components/SprawyList';
 
@@ -10,23 +10,21 @@ class Root extends React.Component {
         this.state = {lista: []}
       }
       
-        async componentDidMount() {
+        componentDidMount() {
             axios.defaults.baseURL = 'http://localhost:5000/api';
-         this.getData();
+            this.getData();
             
             
         }
        async getData()
         {
-          const response = await  axios
-            .get('/sprawy')
-            .then(sprawy => this.setState({ lista: sprawy.data }))
-            .catch(err => {
-                console.log(err);
-                return null;
-            });
+            try{
+                const response = await axios.get('/sprawy');
+                this.setState({ lista: response.data });
+            } catch (e) {
+                console.log(JSON.parse(JSON.stringify(e)));
+            }
             console.log(this.state.lista);
-            console.log(response);
      };
            
       
