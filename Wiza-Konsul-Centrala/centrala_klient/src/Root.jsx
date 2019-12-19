@@ -7,19 +7,25 @@ import SprawyList from './components/SprawyList';
 class Root extends React.Component {   
     constructor(props) {
         super(props);
-        this.state = {lista:axios.get('/sprawy')}
+        this.state = {lista:null}
       }
-      async UNSAFE_componentWillMount()
-      {
-        //this.setState({lista: axios.get('/sprawy')});
-      }
+      
         async componentDidMount() {
             axios.defaults.baseURL = 'http://localhost:5000/api';
-         
-            console.log("tu jestem");
+         this.getData();
+            
             
         }
-        
+       async getData()
+        {
+          await  axios
+            .get('/sprawy')
+            .then(sprawy => this.setState({ lista: sprawy }))
+            .catch(err => {
+                console.log(err);
+                return null;
+            });
+     };
            
       
         render() {
