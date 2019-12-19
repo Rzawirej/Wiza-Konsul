@@ -7,7 +7,7 @@ import SprawyList from './components/SprawyList';
 class Root extends React.Component {   
     constructor(props) {
         super(props);
-        this.state = {lista:null}
+        this.state = {lista: []}
       }
       
         async componentDidMount() {
@@ -18,19 +18,21 @@ class Root extends React.Component {
         }
        async getData()
         {
-          await  axios
+          const response = await  axios
             .get('/sprawy')
-            .then(sprawy => this.setState({ lista: sprawy }))
+            .then(sprawy => this.setState({ lista: sprawy.data }))
             .catch(err => {
                 console.log(err);
                 return null;
             });
+            console.log(this.state.lista);
+            console.log(response);
      };
            
       
         render() {
             
-           console.log(this.state.lista);
+           
           
             return (
                 <div>

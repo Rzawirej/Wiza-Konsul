@@ -20,7 +20,6 @@ module.exports = {
             const sprawy = await Sprawa.find(function (err, sprawa) {
                 if (err) return console.error(err);
             })
-            console.log(sprawa);
             res.status(200).send(sprawy);
         } catch (ex) {
             return res.status(404).send(ex)
