@@ -1,8 +1,8 @@
 import React from 'react';
 import axios from 'axios';
-import FormView from "./FormView";
+import KontaFormView from "./TestFormView";
 
-class Form extends React.Component{
+class KontaForm extends React.Component{
     constructor(props){
         super(props)
         this.state={
@@ -31,7 +31,7 @@ class Form extends React.Component{
   
   async saveSprawa(sprawa){
     try {
-      const response = await axios.post('/sprawy', {imie: sprawa.imie, nazwisko: sprawa.nazwisko});
+      await axios.post('/sprawy', {imie: sprawa.imie, nazwisko: sprawa.nazwisko});
     } catch (e) {
       console.log(JSON.parse(JSON.stringify(e)));
     }
@@ -39,7 +39,7 @@ class Form extends React.Component{
 
   render() {
     return (
-      <FormView
+      <KontaFormView
         handleSubmit={this.handleSubmit}
         imie={this.state.imie}
         nazwisko={this.state.nazwisko}
@@ -49,4 +49,4 @@ class Form extends React.Component{
   }
 }
 
-export default Form;
+export default KontaForm;

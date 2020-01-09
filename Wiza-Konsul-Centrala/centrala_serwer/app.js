@@ -9,6 +9,7 @@ const morgan = require('morgan');
 const cors = require('cors')
 
 const sprawy = require('./src/routes/sprawy');
+const konta = require('./src/routes/konta');
 
 app.set('port', 5000);
 app.use(cors({
@@ -23,6 +24,7 @@ app.use(morgan('tiny'));
 app.use(helmet());
 
 app.use('/api/sprawy', sprawy);
+app.use('/api/konta', konta);
 
 let server = app.listen(app.get('port'), () => {
     var port = server.address().port;

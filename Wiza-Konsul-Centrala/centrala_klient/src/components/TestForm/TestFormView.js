@@ -1,5 +1,6 @@
 import React from 'react';
-const FormView = (props) => {
+import {Form } from 'semantic-ui-react'
+const KontaFormView = (props) => {
     const {
         handleSubmit,
         imie,
@@ -8,17 +9,17 @@ const FormView = (props) => {
     } = props;
 
     return (
-      <form onSubmit={handleSubmit}>
-        <label>
-          Imię:
+      <Form onSubmit={handleSubmit}>
+        <Form.Field inline>
+          <label inline> Imię: </label>
           <input name="imie" type="text" value={imie} onChange={handleChange} />
-        </label>
-        <label>
-          Nazwisko:
+        </Form.Field>
+        <Form.Field inline>
+          <label inline>Nazwisko:</label>
           <input name="nazwisko" type="text" value={nazwisko} onChange={handleChange} />
-        </label>
+        </Form.Field>
         <input type="submit" value="Wyślij" />
-      </form>
+      </Form>
     );
 };
-export default FormView;
+export default KontaFormView;
