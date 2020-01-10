@@ -1,5 +1,5 @@
 import React from 'react';
-const SearchBar = (props) => {
+const SearchBarView = (props) => {
     const {
         handleSubmit,
         input,
@@ -7,12 +7,15 @@ const SearchBar = (props) => {
     } = props;
 
 return (
+    <div>
     <form onSubmit={handleSubmit}>
     <div style={{border:'2px solid black'}}>
-        <input name="search" type="text" value={input} onChange={handleChange} />
+        <input name="input" type="text" value={input} onChange={handleChange} />
+
         <input type="submit" value="Szukaj" />
     </div>
     </form>
+    </div>
     );
 };
-export default SearchBar;
+export default SearchBarView;
