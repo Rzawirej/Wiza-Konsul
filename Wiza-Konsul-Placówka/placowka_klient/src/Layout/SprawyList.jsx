@@ -4,11 +4,11 @@ const SprawyList= (props) =>
 {
   try{
   const sprawyLista=  props.sprawy.map((sprawa) => {
-  return <li  style={{ borderBottom:'1px solid blue', listStyleType:'none' }} key={sprawa.id}>
-      {sprawa.imie}  {sprawa.nazwisko}
-  </li>
+  return <div role="listitem" className="item" style={{borderBottom:'1px solid blue'}}  key={sprawa.id} onClick={()=>{console.log(sprawa.imie)}}>
+          <div className="content">{sprawa.imie}  {sprawa.nazwisko}</div>
+         </div>
     });
-    return <div style={{border:'1px solid red',margin: '5px'}}> <ul>{sprawyLista}</ul></div>;
+    return  <div role="list" className="ui selection middle aligned list"  style={{height:'60%' }}>{sprawyLista} </div>
   }
   catch(err)
   {
