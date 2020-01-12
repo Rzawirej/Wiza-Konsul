@@ -1,7 +1,9 @@
 import React from 'react';
-import Form from './components/Form/Form';
+import KontaForm from './components/KontaForm/KontaForm';
 import axios from 'axios';
-import SprawyList from './components/SprawyList';
+import SprawyList from './components/SprawyList/SprawyList';
+import SideMenu from './components/SideMenu/SideMenu';
+import { Grid, Segment } from 'semantic-ui-react'
 
 
 class Root extends React.Component {   
@@ -29,15 +31,19 @@ class Root extends React.Component {
            
       
         render() {
-            
-           
-          
             return (
-                <div>
-            <Form/>
-            <SprawyList sprawy={this.state.lista}/>
-            </div>
-            
+                <Grid textAlign="center">
+                    <Grid.Column width={4}>
+                        <SideMenu/>
+                    </Grid.Column>
+                    <Grid.Column width={10}>
+                        <Segment>
+                            <KontaForm/>
+                        </Segment>
+                        
+                        {/*<SprawyList sprawy={this.state.lista}/>*/}
+                    </Grid.Column>
+                </Grid>
         )};
     }
 export default Root;
