@@ -10,4 +10,9 @@ router
     //  .post(autho)
     .post(kontaController.createKonto);
 
+router
+    .route('/')
+    //  .get(autho)
+    .get(kontaController.getAllKonta);
+
 module.exports = router;

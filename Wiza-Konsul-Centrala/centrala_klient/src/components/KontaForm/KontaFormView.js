@@ -1,5 +1,5 @@
 import React from 'react';
-import {Form } from 'semantic-ui-react'
+import {Form, Button } from 'semantic-ui-react'
 const KontaFormView = (props) => {
     const {
         handleSubmit,
@@ -10,6 +10,7 @@ const KontaFormView = (props) => {
         haslo,
         placowka,
         handleChange,
+        changeIsAdding
     } = props;
 
     return (
@@ -46,7 +47,8 @@ const KontaFormView = (props) => {
           <option value='AdministratorCentrali'>Administrator Centrali</option>
         </Form.Field>
         
-        <input type="submit" value="Wyślij" />
+        <Button type="submit" value="Zapisz" >Zapisz</Button>
+        <Button onClick={changeIsAdding}>Anuluj </Button>
       </Form>
     );
 };

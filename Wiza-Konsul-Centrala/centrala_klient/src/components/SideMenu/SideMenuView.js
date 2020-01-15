@@ -7,7 +7,7 @@ const SideMenuView = (props) => {
     } = props;
 
     return (
-      <Menu pointing vertical>
+      <Menu fluid pointing vertical>
         <Menu.Item
           name='konta'
           active={activeItem === 'konta'}
