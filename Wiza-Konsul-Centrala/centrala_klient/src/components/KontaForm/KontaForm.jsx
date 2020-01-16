@@ -57,6 +57,7 @@ class KontaForm extends React.Component{
         haslo={this.state.haslo}
         placowka={this.state.placowka}
         handleChange={this.handleChange}
+        changeIsAdding={this.props.changeIsAdding}
       />
     );
   }

@@ -25,4 +25,14 @@ module.exports = {
             return res.status(404).send(e);
         }
     },
+    getAllKonta: async function (req, res) {
+        try {
+            const konta = await Konto.find(function (err, konto) {
+                if (err) return console.error(err);
+            })
+            res.status(200).send(konta);
+        } catch (ex) {
+            return res.status(404).send(ex)
+        }
+    },
 }
