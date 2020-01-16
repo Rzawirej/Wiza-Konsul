@@ -4,6 +4,7 @@ import { Grid, Segment } from 'semantic-ui-react';
 import SearchBar from './Layout/SearchBar';
 import SprawyList from './Layout/SprawyList.jsx';
 import MenuP from './Layout/MenuPracownik/MenuP';
+import CaseFormView from "./Layout/AddCase/CaseFormView"
 
 
 class Root extends React.Component {   
@@ -31,7 +32,7 @@ class Root extends React.Component {
      };*/
            addClicked()
            {
-               console.log(this.state.test);
+               console.log(this.state.values);
            }
       
         render() {
@@ -43,16 +44,17 @@ class Root extends React.Component {
                             <SearchBar/>
                         </Segment>
                         </Grid.Row>
-                        <Grid.Row height={10}>
+                       {/*} <Grid.Row height={10}>
                         <Grid.Column width={12} style={{height:'60vh'}}>
                             <div >
                             <SprawyList  sprawy={this.state.lista}></SprawyList>
                             </div>
                         </Grid.Column>
-                        </Grid.Row>
+            </Grid.Row>{*/}
                         <Grid.Row width={10} height={10}>
                             <MenuP handleAdd={this.addClicked}/>
                         </Grid.Row>
+                        <CaseFormView cele_wizyt={["1","2","3","4a","4b"]}/>
                 </Grid>
         )};
     }

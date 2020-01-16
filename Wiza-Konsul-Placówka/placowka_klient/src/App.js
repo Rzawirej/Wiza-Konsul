@@ -12,6 +12,7 @@ function App() {
     <SearchBar/>
     <SprawyList sprawy={[{imie:'Jan', nazwisko:'Kowalski'},{imie:'adam', nazwisko:'nowak'}]}/>
     <MenuP/>
+    <CaseFormView/>
     </div>
   );
 }
