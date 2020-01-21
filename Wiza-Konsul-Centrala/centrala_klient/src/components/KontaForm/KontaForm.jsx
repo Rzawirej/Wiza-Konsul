@@ -41,6 +41,9 @@ class KontaForm extends React.Component{
     try {
       const response = await axios.post('/konta', {imiona: konto.imiona, nazwisko: konto.nazwisko, pesel: konto.pesel, login: konto.login, haslo: konto.haslo, placowka: konto.placowka});
       console.log(response);
+      if(response.name != "Error"){
+        this.props.changeIsAdding();
+      }
     } catch (e) {
       console.log(JSON.parse(JSON.stringify(e)));
     }
