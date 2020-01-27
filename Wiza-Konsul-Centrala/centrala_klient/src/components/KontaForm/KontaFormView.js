@@ -1,11 +1,12 @@
 import React from 'react';
-import {Form, Button, Message} from 'semantic-ui-react'
+import {Form, Button} from 'semantic-ui-react'
 
 
 
 const KontaFormView = (props) => {
     const {
         handleSubmit,
+        handleSubmitEdit,
         imiona, 
         nazwisko,
         pesel,
@@ -17,12 +18,13 @@ const KontaFormView = (props) => {
         loginExists,
         handleChange,
         changeIsAdding,
-        handleLostFocus
+        handleLostFocus,
+        actualLogin
     } = props;
     const errorStyle={color: 'red'};
     return (
       
-      <Form onSubmit={handleSubmit}>
+      <Form onSubmit={actualLogin.length > 0 ? handleSubmitEdit : handleSubmit}>
         <Form.Field inline>
           <label inline> Imiona: </label>
           <input name="imiona" type="text" value={imiona} onChange={handleChange}  onBlur={handleLostFocus}/>

@@ -3,33 +3,56 @@ import axios from 'axios';
 import KontaFormView from "./KontaFormView";
 
 class KontaForm extends React.Component{
-    constructor(props){
-        super(props)
-        this.state={
+  constructor(props){
+      super(props)
+      this.state={
+          imiona: '',
+          nazwisko: '',
+          pesel: '',
+          login: '',
+          haslo: '',
+          placowka: '',
+          rola: 'PracownikPlacówki',
+          errors: {
             imiona: '',
             nazwisko: '',
             pesel: '',
             login: '',
             haslo: '',
             placowka: '',
-            rola: 'PracownikPlacówki',
-            errors: {
-              imiona: '',
-              nazwisko: '',
-              pesel: '',
-              login: '',
-              haslo: '',
-              placowka: '',
-            },
-            placowkaExists: '',
-            loginExists: ''
-        }
-        this.handleChange = this.handleChange.bind(this);
-        this.handleSubmit = this.handleSubmit.bind(this);
-        this.saveKonto = this.saveKonto.bind(this);
-        this.handleLostFocus = this.handleLostFocus.bind(this);
-        this.validateForm = this.validateForm.bind(this);
+          },
+          placowkaExists: '',
+          loginExists: '',
+      }
+      this.handleChange = this.handleChange.bind(this);
+      this.handleSubmit = this.handleSubmit.bind(this);
+      this.handleSubmitEdit = this.handleSubmitEdit.bind(this);
+      this.saveKonto = this.saveKonto.bind(this);
+      this.editKonto = this.editKonto.bind(this);
+      this.handleLostFocus = this.handleLostFocus.bind(this);
+      this.validateForm = this.validateForm.bind(this);
+      this.getActualKonto = this.getActualKonto.bind(this);
+  }
+    
+  componentDidMount() {
+    this.getActualKonto();
+  }
+
+  async getActualKonto() {
+    if(this.props.actualLogin.length>0){
+      const response = await axios.get('/konta/' + this.props.actualLogin);
+      this.setState({
+        imiona: response.data.imiona,
+        nazwisko: response.data.nazwisko,
+        pesel: response.data.pesel,
+        login: response.data.login,
+        haslo: response.data.haslo,
+        placowka: response.data.placowka,
+        rola: response.data.stanowisko,
+      })
+
     }
+  }
    handleChange(event) {
     this.setState({
         [event.target.name]: event.target.value,
@@ -98,7 +121,23 @@ class KontaForm extends React.Component{
     } else {
       console.error('Złe dane')
     }
+    event.preventDefault();
+  }
 
+  handleSubmitEdit(event) {
+    if (this.validateForm(this.state.errors)) {
+      this.editKonto({
+        imiona: this.state.imiona,
+        nazwisko: this.state.nazwisko,
+        pesel: this.state.pesel,
+        login: this.state.login,
+        haslo: this.state.haslo,
+        placowka: this.state.placowka,
+        rola: this.state.rola
+      })
+    } else {
+      console.error('Złe dane')
+    }
     event.preventDefault();
   }
   validateForm = (errors) => {
@@ -112,7 +151,6 @@ class KontaForm extends React.Component{
   async saveKonto(konto){
     try {
       const response = await axios.post('/konta', {imiona: konto.imiona, nazwisko: konto.nazwisko, pesel: konto.pesel, login: konto.login, haslo: konto.haslo, placowka: konto.placowka, stanowisko: konto.rola});
-      console.log(response);
       if(response.name != "Error"){
         this.props.changeIsAdding();
       }
@@ -121,13 +159,57 @@ class KontaForm extends React.Component{
       this.setState({placowkaExists : ''})
       this.setState({loginExists : ''})
       console.log(message);
+      if (message == undefined) {
+        this.props.changeIsAdding('');
+      }
       if(message == 'Request failed with status code 407')  this.setState({placowkaExists : 'Nie istnieje placówka o takim id'});
       if(message == 'Request failed with status code 408')  this.setState({loginExists : 'Istnieje już użytkownik o takim loginie'});
       if(message == 'Request failed with status code 409')  {
         this.setState({placowkaExists : 'Nie istnieje placówka o takim id'})
         this.setState({loginExists : 'Istnieje już użytkownik o takim loginie'});
       }
-      console.log(this.state);
+    }
+  }
+  async editKonto(konto) {
+    try {
+      const response = await axios.put('/konta/'+this.props.actualLogin, {
+        imiona: konto.imiona,
+        nazwisko: konto.nazwisko,
+        pesel: konto.pesel,
+        login: konto.login,
+        haslo: konto.haslo,
+        placowka: konto.placowka,
+        stanowisko: konto.rola
+      });
+      if (response.name != "Error") {
+        this.props.changeIsAdding();
+      }
+    } catch (e) {
+      const message = JSON.parse(JSON.stringify(e)).message;
+      this.setState({
+        placowkaExists: ''
+      })
+      this.setState({
+        loginExists: ''
+      })
+      console.log(message);
+      if (message == undefined) {
+        this.props.changeIsAdding('');
+      }
+      if (message == 'Request failed with status code 407') this.setState({
+        placowkaExists: 'Nie istnieje placówka o takim id'
+      });
+      if (message == 'Request failed with status code 408') this.setState({
+        loginExists: 'Istnieje już użytkownik o takim loginie'
+      });
+      if (message == 'Request failed with status code 409') {
+        this.setState({
+          placowkaExists: 'Nie istnieje placówka o takim id'
+        })
+        this.setState({
+          loginExists: 'Istnieje już użytkownik o takim loginie'
+        });
+      }
     }
   }
 
@@ -135,6 +217,7 @@ class KontaForm extends React.Component{
     return (
       <KontaFormView
         handleSubmit={this.handleSubmit}
+        handleSubmitEdit={this.handleSubmitEdit}
         imiona={this.state.imiona}
         nazwisko={this.state.nazwisko}
         pesel={this.state.pesel}
@@ -147,6 +230,7 @@ class KontaForm extends React.Component{
         handleChange={this.handleChange}
         changeIsAdding={this.props.changeIsAdding}
         handleLostFocus={this.handleLostFocus}
+        actualLogin={this.props.actualLogin}
       />
     );
   }

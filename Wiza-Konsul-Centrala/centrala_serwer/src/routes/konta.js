@@ -21,4 +21,8 @@ router
     .route('/:login')
     .put(kontaController.editKonto);
 
+router
+    .route('/:login')
+    .get(kontaController.getKonto);
+
 module.exports = router;
