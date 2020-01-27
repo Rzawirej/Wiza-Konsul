@@ -7,12 +7,18 @@ const autho = require('../middleware/autho');
 
 router
     .route('/')
-    //  .post(autho)
     .post(kontaController.createKonto);
 
 router
     .route('/')
-    //  .get(autho)
     .get(kontaController.getAllKonta);
+
+router
+    .route('/:login')
+    .delete(kontaController.deleteKonto);
+
+router
+    .route('/:login')
+    .put(kontaController.editKonto);
 
 module.exports = router;

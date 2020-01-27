@@ -9,6 +9,7 @@ const WorkPlaceView = (props) => {
 
     return (
         <>
+        
             {isAdding ? <KontaForm changeIsAdding={changeIsAdding}/> : <ManageKonta changeIsAdding={changeIsAdding}/>}
         </>
         

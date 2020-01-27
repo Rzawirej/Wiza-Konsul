@@ -11,41 +11,123 @@ class KontaForm extends React.Component{
             pesel: '',
             login: '',
             haslo: '',
-            placowka: ''
+            placowka: '',
+            rola: 'PracownikPlacówki',
+            errors: {
+              imiona: '',
+              nazwisko: '',
+              pesel: '',
+              login: '',
+              haslo: '',
+              placowka: '',
+            },
+            placowkaExists: '',
+            loginExists: ''
         }
-
         this.handleChange = this.handleChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
         this.saveKonto = this.saveKonto.bind(this);
+        this.handleLostFocus = this.handleLostFocus.bind(this);
+        this.validateForm = this.validateForm.bind(this);
     }
    handleChange(event) {
     this.setState({
         [event.target.name]: event.target.value,
     });
   }
+  handleLostFocus(event){
+    event.preventDefault();
+    const { name, value } = event.target;
+    let errors = this.state.errors;
+
+    const validEmailRegex =
+      RegExp(/^(([^<>()\[\]\.,;:\s@\"]+(\.[^<>()\[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i);
+
+    switch (name) {
+      case 'imiona': 
+        errors.imiona = 
+          value.length == 0 ? 'Imiona to pole obowiązkowe' :'';
+        break;
+      case 'nazwisko': 
+        errors.nazwisko = 
+          value.length == 0 ? 'Nazwisko to pole obowiązkowe' :'';
+        break;
+      case 'pesel': 
+        errors.pesel = 
+          value.length == 0 ? 'Pesel to pole obowiązkowe' :
+          value.length != 11 || !/^\d+$/.test(value)
+            ? 'Pesel musi zawierać 11 cyfr'
+            : '';
+        break;
+      case 'login': 
+        errors.login = 
+          value.length == 0 ? 'Login to pole obowiązkowe' :
+          value.length < 6
+            ? 'Login musi mieć co najmniej 6 znaków'
+            : '';
+        break;
+      case 'haslo': 
+        errors.haslo = 
+          value.length == 0 ? 'Hasło to pole obowiązkowe' :
+          value.length < 8
+            ? 'Hasło musi mieć co najmniej 8 znaków'
+            : '';
+        break;
+      case 'placowka': 
+        errors.placowka = 
+          value.length == 0 ? 'Id placówki to pole obowiązkowe' :'';
+        break;
+      default:
+        break;
+    }
+
+    this.setState({errors, [name]: value})
+  }
 
   handleSubmit(event) {
-   
-    this.saveKonto({
-      imiona: this.state.imiona,
-      nazwisko: this.state.nazwisko,
-      pesel: this.state.pesel,
-      login: this.state.login,
-      haslo: this.state.haslo,
-      placowka: this.state.placowka,
-    })
+    if (this.validateForm(this.state.errors)) {
+      this.saveKonto({
+        imiona: this.state.imiona,
+        nazwisko: this.state.nazwisko,
+        pesel: this.state.pesel,
+        login: this.state.login,
+        haslo: this.state.haslo,
+        placowka: this.state.placowka,
+        rola: this.state.rola
+      })
+    } else {
+      console.error('Złe dane')
+    }
+
     event.preventDefault();
   }
-  
+  validateForm = (errors) => {
+    let valid = true;
+    Object.values(errors).forEach(
+      (val) => val.length > 0 && (valid = false)
+    );
+    return valid;
+  }
+
   async saveKonto(konto){
     try {
-      const response = await axios.post('/konta', {imiona: konto.imiona, nazwisko: konto.nazwisko, pesel: konto.pesel, login: konto.login, haslo: konto.haslo, placowka: konto.placowka});
+      const response = await axios.post('/konta', {imiona: konto.imiona, nazwisko: konto.nazwisko, pesel: konto.pesel, login: konto.login, haslo: konto.haslo, placowka: konto.placowka, stanowisko: konto.rola});
       console.log(response);
       if(response.name != "Error"){
         this.props.changeIsAdding();
       }
     } catch (e) {
-      console.log(JSON.parse(JSON.stringify(e)));
+      const message = JSON.parse(JSON.stringify(e)).message;
+      this.setState({placowkaExists : ''})
+      this.setState({loginExists : ''})
+      console.log(message);
+      if(message == 'Request failed with status code 407')  this.setState({placowkaExists : 'Nie istnieje placówka o takim id'});
+      if(message == 'Request failed with status code 408')  this.setState({loginExists : 'Istnieje już użytkownik o takim loginie'});
+      if(message == 'Request failed with status code 409')  {
+        this.setState({placowkaExists : 'Nie istnieje placówka o takim id'})
+        this.setState({loginExists : 'Istnieje już użytkownik o takim loginie'});
+      }
+      console.log(this.state);
     }
   }
 
@@ -59,8 +141,12 @@ class KontaForm extends React.Component{
         login={this.state.login}
         haslo={this.state.haslo}
         placowka={this.state.placowka}
+        errors={this.state.errors}
+        placowkaExists={this.state.placowkaExists}
+        loginExists={this.state.loginExists}
         handleChange={this.handleChange}
         changeIsAdding={this.props.changeIsAdding}
+        handleLostFocus={this.handleLostFocus}
       />
     );
   }
