@@ -1,54 +1,71 @@
 import React from 'react';
-import {Form, Button } from 'semantic-ui-react'
+import {Form, Button, Message} from 'semantic-ui-react'
+
+
+
 const KontaFormView = (props) => {
     const {
         handleSubmit,
-        imiona,
+        imiona, 
         nazwisko,
         pesel,
         login,
         haslo,
         placowka,
+        errors,
+        placowkaExists,
+        loginExists,
         handleChange,
-        changeIsAdding
+        changeIsAdding,
+        handleLostFocus
     } = props;
-
+    const errorStyle={color: 'red'};
     return (
+      
       <Form onSubmit={handleSubmit}>
         <Form.Field inline>
           <label inline> Imiona: </label>
-          <input name="imiona" type="text" value={imiona} onChange={handleChange} />
+          <input name="imiona" type="text" value={imiona} onChange={handleChange}  onBlur={handleLostFocus}/>
         </Form.Field>
+        <span style={errorStyle}>{errors.imiona}</span>
         <Form.Field inline>
           <label inline>Nazwisko:</label>
-          <input name="nazwisko" type="text" value={nazwisko} onChange={handleChange} />
+          <input name="nazwisko" type="text" value={nazwisko} onChange={handleChange} onBlur={handleLostFocus}/>
         </Form.Field>
-        <Form.Field inline>
-          <label inline>Pesel:</label>
-          <input name="pesel" type="text" value={pesel} onChange={handleChange} />
+        <span style={errorStyle}>{errors.nazwisko}</span>
+        <Form.Field inline >
+          <label inline >Pesel:</label>
+          <input  name="pesel" type="text" value={pesel} onChange={handleChange} onBlur={handleLostFocus}/>
         </Form.Field>
+        <span style={errorStyle}>{errors.pesel}</span>
         <Form.Field inline>
           <label inline>Login:</label>
-          <input name="login" type="text" value={login} onChange={handleChange} />
+          <input name="login" type="text" value={login} onChange={handleChange} onBlur={handleLostFocus}/>
         </Form.Field>
+        <span style={errorStyle}>{errors.login}</span>
+        <span style={errorStyle}>{loginExists}</span>
         <Form.Field inline>
           <label inline>Haslo:</label>
-          <input name="haslo" type="password" value={haslo} onChange={handleChange} />
+          <input name="haslo" type="password" value={haslo} onChange={handleChange} onBlur={handleLostFocus}/>
         </Form.Field>
+        <span style={errorStyle}>{errors.haslo}</span>
         <Form.Field inline>
           <label inline>Id placówki:</label>
-          <input name="placowka" type="text" value={placowka} onChange={handleChange} />
+          <input name="placowka" type="text" value={placowka} onChange={handleChange} onBlur={handleLostFocus}/>
         </Form.Field>
+        <span style={errorStyle}>{errors.placowka}</span>
+        <span style={errorStyle}>{placowkaExists}</span>
         
-        <Form.Field inline label='Rola' control='select'>
-          <option value='PracownikPlacowki'>Pracownik Placówki</option>
-          <option value='KierownikPlacowki'>Kierownik Placówki</option>
+        <Form.Field inline label='Rola' control='select' name="rola" onChange={handleChange}>
+          <option value='PracownikPlacówki'>Pracownik Placówki</option>
+          <option value='KierownikPlacówki'>Kierownik Placówki</option>
           <option value='PracownikCentrali'>Pracownik Centrali</option>
           <option value='AdministratorCentrali'>Administrator Centrali</option>
         </Form.Field>
         
         <Button type="submit" value="Zapisz" >Zapisz</Button>
         <Button onClick={changeIsAdding}>Anuluj </Button>
+        
       </Form>
     );
 };

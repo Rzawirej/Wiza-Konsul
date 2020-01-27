@@ -1,5 +1,5 @@
 import React from 'react';
-import { ListContent, List, Segment } from 'semantic-ui-react';
+import { ListContent, List, Segment, Message } from 'semantic-ui-react';
 
 const SprawyList= (props) =>
 {

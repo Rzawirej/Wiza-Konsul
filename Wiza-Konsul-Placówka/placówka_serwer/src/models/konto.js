@@ -38,10 +38,6 @@ const kontoSchema = new mongoose.Schema({
         minlength: 1,
         maxlength: 10,
         required: true
-    },
-    stanowisko: {
-        type: String,
-        required: true
     }
 });
 const Konto = mongoose.model('Konto', kontoSchema, 'Konta');
@@ -53,8 +49,7 @@ function validateKonto(konto) {
         pesel: Joi.string().min(11).max(11).required(),
         login: Joi.string().min(6).max(32).required(),
         haslo: Joi.string().min(8).max(32).required(),
-        placowka: Joi.string().min(1).max(10).required(),
-        stanowisko: Joi.string().required(),
+        placowka: Joi.string().min(1).max(10).required()
     }
     return Joi.validate(konto, schema);
 }

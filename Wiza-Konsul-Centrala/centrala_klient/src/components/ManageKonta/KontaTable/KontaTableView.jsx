@@ -1,5 +1,8 @@
 import React from 'react';
 import { Menu, Icon, Button, Table } from 'semantic-ui-react';
+const axios = require('axios');
+
+
 
 const KontaTableView= (props) =>
 {
@@ -12,7 +15,7 @@ const KontaTableView= (props) =>
           <Table.Cell>#{konto.placowka}</Table.Cell>
           <Table.Cell>
             <Icon color='blue' name='edit' />
-            <Icon color='red' name='close' />
+            <Icon onClick={() => props.deleteKonto(konto.login)} color='red' name='close' />
           </Table.Cell>
         </Table.Row>)
       
@@ -36,7 +39,7 @@ const KontaTableView= (props) =>
       <Table.Footer>
         <Table.Row>
           
-          <Table.HeaderCell colSpan='3'>
+          <Table.HeaderCell colSpan='4'>
             <Button
               floated='left'
               icon
@@ -44,7 +47,7 @@ const KontaTableView= (props) =>
               primary
               size='small'
               onClick={props.changeIsAdding}>
-              <Icon name='user' /> Add User
+              <Icon name='user' /> Dodaj
             </Button>
             <Menu floated='right' pagination>
               <Menu.Item as='a' icon>

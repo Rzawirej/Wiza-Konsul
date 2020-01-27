@@ -14,18 +14,18 @@ const SideMenuView = (props) => {
           onClick={handleItemClick}
         />
         <Menu.Item
-          name='slownik'
-          active={activeItem === 'slownik'}
+          name='slowniki'
+          active={activeItem === 'slowniki'}
           onClick={handleItemClick}
         />
         <Menu.Item
-          name='zmienne systemowe'
-          active={activeItem === 'zmienne systemowe'}
+          name='parametry systemowe'
+          active={activeItem === 'parametry systemowe'}
           onClick={handleItemClick}
         />
         <Menu.Item
-          name='system'
-          active={activeItem === 'system'}
+          name='raporty'
+          active={activeItem === 'raporty'}
           onClick={handleItemClick}
         />
       </Menu>
