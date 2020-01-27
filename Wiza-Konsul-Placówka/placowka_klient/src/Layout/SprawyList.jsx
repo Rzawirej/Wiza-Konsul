@@ -1,8 +1,13 @@
 import React from 'react';
 
-const SprawyList= (props) =>
+class SprawyList extends React.Component
 {
-  try{
+  constructor (props)
+{
+super(props)
+} 
+render(){
+ try{
   const sprawyLista=  props.sprawy.map((sprawa) => {
   return <div role="listitem" className="item" style={{borderBottom:'1px solid blue'}}  key={sprawa.id} onClick={()=>{console.log(sprawa.imie)}}>
           <div className="content">{sprawa.imie}  {sprawa.nazwisko}</div>
@@ -15,5 +20,7 @@ const SprawyList= (props) =>
     console.log(err);
     return null;
   }
-};
+  
+}
+}
 export default SprawyList;
