@@ -4,7 +4,7 @@ import SearchBar from './Layout/SearchBar';
 import SprawyList from './Layout/SprawyList.jsx';
 import MenuP from './Layout/MenuPracownik/MenuP';
 import CaseForm from "./Layout/AddCase/CaseForm"
-
+import axios from 'axios';
 
 class Root extends React.Component {   
     constructor(props) {
@@ -22,12 +22,12 @@ class Root extends React.Component {
           this.setState({menu:true});
       }
         componentDidMount() {
-           // axios.defaults.baseURL = 'http://localhost:5000/api';
-           // this.getData();
+           axios.defaults.baseURL = 'http://localhost:5001/api';
+            this.getData();
             
             
         }
-    /*   async getData()
+      async getData()
         {
             try{
                 const response = await axios.get('/sprawy');
@@ -36,7 +36,7 @@ class Root extends React.Component {
                 console.log(JSON.parse(JSON.stringify(e)));
             }
             console.log(this.state.lista);
-     };*/
+     };
            
      
       
