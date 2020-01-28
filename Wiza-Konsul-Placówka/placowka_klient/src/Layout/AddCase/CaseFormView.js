@@ -1,4 +1,5 @@
 import React from 'react'
+import { Form, Radio,Grid,Button } from 'semantic-ui-react'
 const CaseFormView =(props) =>
 {
     const{
@@ -13,89 +14,159 @@ const CaseFormView =(props) =>
             obywatelstwo,
             nrd,
             rodzaj,
-            money,
+            opis,
+            plec,
+            opłata,
             handleChange,
-            handleSubmit
+            handleSubmit,
+            handleCheckBoxChange,
+            handleRadioChange,
+            handleReturn
         }=props;
 
-const celeList= cele_wizyt.map((cel)=>{
+const celeList=cele_wizyt.map((cel)=>{
 return <option value={cel}>{cel}</option>
 });
-const dokList= dokumenty.map((dok)=>{
+const dokList= [] /*dokumenty.map((dok)=>{
   return <option name={dok} value={dok}>{dok}</option>
-  });
+  });*/
 return(
+  
+
     <form class="ui form" onSubmit={handleSubmit}>
+      
+      <Grid style={{margin:"100px"}}>
+      <Grid.Row columns={2}>
+      <Grid.Column>
         <div class="inline fields">
-    <div class="field">
       <label>Imię</label>
       <div  class="ui input"><input name="imie" value={imie} type="text" placeholder="Imię" onChange={handleChange} /></div>
+      </div>
+      </Grid.Column>
+      <Grid.Column>
+      <div class="inline fields">
       <label> Rodzaj wizy</label>
       <select name="rodzaj" value={rodzaj} onChange={handleChange}>
           <option value="A">A Lotniskowa</option>
           <option value="C">C Shengen</option>
           <option value="D">D Krajowa</option>
       </select>
-    </div>
-    </div>
-    <div class="inline fields">
-    <div class="field">
+      </div>
+      </Grid.Column>
+      </Grid.Row>
+    
+    
+    <Grid.Row columns={2}>
+      <Grid.Column >
+      <div class="inline fields">
       <label>Drugie imię</label>
       <div class="ui input"><input name="imie2" value={imie2} type="text" placeholder="Imię 2" onChange={handleChange} /></div>
+      </div>
+      </Grid.Column>
+      <Grid.Column>
+      <div class="inline fields">
       <label>Cel wizyty</label>
-      <select name="cel" value={cel}>
+      <select name="cel" value={cel} onChange={handleChange}>
        {celeList}
       </select>
-    </div>
-    </div>
+      </div>
+      </Grid.Column>
+      </Grid.Row>
+    
+      <Grid.Row columns={2}>
+    <Grid.Column >
     <div class="inline fields">
-    <div class="field">
       <label>Nazwisko</label>
       <div class="ui input"><input name="nazwisko" value={nazwisko} type="text" placeholder="Nazwisko" onChange={handleChange}/></div>
+    </div>
+    </Grid.Column>
+    <Grid.Column>
+      <div class="inline fields">
       <label>Kraj pochodzenia</label>
       <div class="ui input"><input name="kraj" value={kraj} type="text" placeholder="Kraj" onChange={handleChange} /></div>
     </div>
-    </div>
+    </Grid.Column>
+    </Grid.Row>  
+    <Grid.Row columns={2}>
+      <Grid.Column>
     <div class="inline fields">
-    <div class="field">
       <label>Pesel</label>
       <div class="ui input"><input name="PESEL" value={pesel} type="text" placeholder="Pesel" onChange={handleChange}/></div>
+      </div>
+      </Grid.Column>
+      <Grid.Column>
+      <div class="inline fields">
       <label>Obywatelstwo</label>
       <div class="ui input"><input name="obywatelstwo" value={obywatelstwo} type="text" placeholder="Obywatelstwo" onChange={handleChange}/> </div>
-    </div>
-    </div>
+       </div>
+    </Grid.Column>
+    </Grid.Row>
+    <Grid.Row columns={2}>
+    <Grid.Column>
     <div class="inline fields">
-    <div class="field">
       <label>Numer dokumentu</label>
       <div class="ui input"><input name="nrd" value={nrd} type="text" placeholder="Numer_id" onChange={handleChange} /></div>
-
-    <label>Płeć</label>
-    
-      <div class="ui radio checkbox">
-        <input type="radio" class="hidden" readonly="" tabindex="0" value="M" />
-        <label>mężczyzna</label>
       </div>
-   
-      <div class="ui radio checkbox">
-        <input type="radio" class="hidden" readonly="" tabindex="0" value="F" />
-        <label>kobieta</label>
-        </div>
+      </Grid.Column>
+      <Grid.Column>
+      <div class="inline fields">
+    <label>Płeć</label>   
+    <Form.Field inline>
+          <Radio
+            label='Mężczyzna'
+            name='plec'
+            value={plec}
+            checked={plec==='Mężczyzna'}   
+            onChange={handleRadioChange}
+          />
+        </Form.Field>
+        <Form.Field inline>
+          <Radio
+            label='Kobieta'
+            name='plec'
+            value={plec}
+            checked={plec==='Kobieta'}
+            
+            onChange={handleRadioChange}
+          />
+        </Form.Field>
     </div>
-    </div>
+    </Grid.Column>
+    </Grid.Row >
+    <Grid.Row columns={2}>
+      <Grid.Column>
     <div class="inline fields">
-    <div class="field">
     <label> Rodzaj dokumentu</label>
       <select name="rodzaj" value={rodzaj} onChange={handleChange}>
           {dokList}
       </select>
+      </div>
+      </Grid.Column>
+      <Grid.Column>
+      <div class="inline fields">
       <label> Opłata
       </label>
-        <input name="opłata" value={money} type="checkbox" value="money"  onChange={handleChange}/>
-       
-    </div>
-    </div>
+        <input name="opłata" value={opłata} type="checkbox" checked={opłata===true}   onChange={handleCheckBoxChange}/>
+        </div>
+        </Grid.Column>
+   
+    </Grid.Row>
+  <Grid.Row >
+    <label>Opis:</label>
+<input style={{height:"150px"}} name="opis" value={opis} type="text" onChange={handleChange}/>
+
+  </Grid.Row>
+<Grid.Row>
+  <div class="inline fields">
+    <Button type="submit"> Dodaj </Button>
+    <Button onClick={handleReturn}> Anuluj </Button>
+  
     
+  </div>
+</Grid.Row>
+    </Grid>
     </form>
+   
 )
 };
 export default CaseFormView;

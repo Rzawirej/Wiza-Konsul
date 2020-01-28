@@ -14,9 +14,12 @@ class CaseForm extends React.Component{
         nrd:'',
         rodzaj:'',
         plec:'',
+        opis:'',
         opłata: false,
         }
         this.handleChange=this.handleChange.bind(this);
+        this.handleRadioChange=this.handleRadioChange.bind(this);
+        this.handleCheckBoxChange=this.handleCheckBoxChange.bind(this);
         this.handleSubmit=this.handleSubmit.bind(this)
     }
 componentDidMount()
@@ -31,6 +34,18 @@ handleChange(event) {
     });
     console.log(event.target.value);
   };
+  handleCheckBoxChange(event)
+  {
+      this.setState({[event.target.name]:!this.state.opłata})
+     
+    
+      }
+handleRadioChange(event)
+  {
+      this.setState({[event.target.name]:event.target.value})
+     console.log(this.state.plec);
+      
+      }
 handleSubmit(event)
 {
   // this.saveSprawa({});
@@ -38,13 +53,14 @@ handleSubmit(event)
 };
 setCele()
 {
-    this.setState(cele_wziyty=['1','2','3','4','5','5a','5b','6','7','8','9','10','11','12','13','14','15','16','17','17a','18','19','19a','20','21','22','23'])
-};
+    this.setState({cele_wizyt:['1','2','3','4','5','5a','5b','6','7','8','9','10','11','12','13','14','15','16','17','17a','18','19','19a','20','21','22','23']})
+    
+}
 saveSprawa(sprawa)
 {
 
 }
-getData()
+/*async getData ()
 {
     try {
         const response = await axios.get('/rodzajeDokumentow');
@@ -54,13 +70,15 @@ getData()
     } catch (e) {
         console.log(JSON.parse(JSON.stringify(e)));
     }
-};
+};*/
 render()
 {
     return(
-            <CaseFormView dokumenty={this.state.dokumenty} cele_wziyt={this.state.cele_wizyt} imie={this.state.imie}
-            imie2={this.state.imie2} nazwisko={this.state.nazwisko} cel={this.state.cel} kraj={this.state.kraj} obywatelstwo={this.state.obywatelstwo}
-            nrd={this.state.nrd} plec={this.state.plec} opłata={this.state.opłata} />
+            <CaseFormView dokumenty={this.state.dokumenty} cele_wizyt={this.state.cele_wizyt} imie={this.state.imie}
+            imie2={this.state.imie2} nazwisko={this.state.nazwisko} cel={this.state.cel} kraj={this.state.kraj} 
+             obywatelstwo={this.state.obywatelstwo} opis={this.state.opis} handleReturn={this.props.handleReturn}
+            nrd={this.state.nrd} plec={this.state.plec} opłata={this.state.opłata} handleRadioChange={this.handleRadioChange} 
+            handleCheckBoxChange={this.handleCheckBoxChange} handleChange={this.handleChange} handleSubmit={this.handleSubmit} />
     );
 }
 
