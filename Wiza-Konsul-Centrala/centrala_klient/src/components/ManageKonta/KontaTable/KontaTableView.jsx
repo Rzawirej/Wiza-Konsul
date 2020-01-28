@@ -14,7 +14,7 @@ const KontaTableView= (props) =>
           <Table.Cell>{konto.imiona}  {konto.nazwisko}</Table.Cell>
           <Table.Cell>#{konto.placowka}</Table.Cell>
           <Table.Cell>
-            <Icon color='blue' name='edit' />
+            <Icon onClick={() => props.editKonto(konto.login)} color='blue' name='edit' />
             <Icon onClick={() => props.deleteKonto(konto.login)} color='red' name='close' />
           </Table.Cell>
         </Table.Row>)
@@ -75,4 +75,3 @@ const KontaTableView= (props) =>
 
 };
 export default KontaTableView;
-//<List divided verticalAlign='middle'>{kontaList}</List>;

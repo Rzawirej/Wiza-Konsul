@@ -4,8 +4,10 @@ import SideMenuView from './SideMenuView'
 class SideMenu extends React.Component {
   state = { activeItem: 'konta' }
 
-  handleItemClick = (e, { name }) => this.setState({ activeItem: name })
-
+  handleItemClick = (e, { name }) => {
+    this.setState({ activeItem: name })
+    this.props.manageWorkPlace(name);
+  }
   render() {
     return (
         <SideMenuView

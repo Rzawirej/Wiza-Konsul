@@ -77,6 +77,21 @@ module.exports = {
             } = validate(req.body);
             if (error) return res.status(400).send(error.details[0].message);
 
+            const placowka = await Placowka.find({
+                identyfikator: req.body.placowka
+            });
+            let konto
+            if(req.params.login == req.body.login){
+                konto=[];
+            }else{
+                konto = await Konto.find({
+                    login: req.body.login
+                });
+            }
+            if (konto.length > 0 && placowka.length == 0) return res.status(409).send({ message: 'Login i Placowka' });
+            if (placowka.length == 0) return res.status(407).send({message :"Placowka"});
+            if (konto.length > 0) return res.status(408).send({ message: 'Login' });
+
             const newKonto = await Konto.findOneAndUpdate(
                 {login: req.params.login}, {
                     $set: req.body
@@ -88,6 +103,16 @@ module.exports = {
         } catch (e) {
             console.log(e);
             return res.status(404).send(e);
+        }
+    },
+    getKonto: async function (req, res) {   
+        try {
+            const konto = await Konto.findOne({
+                login: req.params.login
+            });
+            res.status(200).send(konto);
+        } catch (ex) {
+            return res.status(404).send(ex)
         }
     }
 }

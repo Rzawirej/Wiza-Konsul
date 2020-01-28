@@ -9,6 +9,7 @@ class KontaTable extends React.Component {
             lista: [],
         }
         this.deleteKonto=this.deleteKonto.bind(this);
+        this.editKonto=this.editKonto.bind(this);
     }
     componentDidMount() {
         axios.defaults.baseURL = 'http://localhost:5000/api';
@@ -25,7 +26,6 @@ class KontaTable extends React.Component {
         }
     };
     async deleteKonto(login) {
-        
         try {
             const response = await axios.delete('/konta/' + login);
             this.setState({
@@ -35,9 +35,12 @@ class KontaTable extends React.Component {
             console.log(JSON.parse(JSON.stringify(e)));
         }
     };
+    editKonto(login){
+        this.props.changeIsAdding(login);
+    }
   render() {
     return (
-      <KontaTableView konta={this.state.lista} changeIsAdding={this.props.changeIsAdding} deleteKonto={this.deleteKonto}/>
+      <KontaTableView konta={this.state.lista} changeIsAdding={this.props.changeIsAdding} deleteKonto={this.deleteKonto} editKonto={this.editKonto}/>
     );
   }
 }
