@@ -14,6 +14,7 @@ const cors = require('cors');
 
 const sprawy = require('./src/routes/sprawy');
 const konta = require('./src/routes/konta');
+const rodzajeDokumentu = require('./src/routes/rodzajeDokumentu');
 
 app.set('port', 5001);
 app.use(cors({
@@ -29,6 +30,7 @@ app.use(helmet());
 
 app.use('/api/sprawy', sprawy);
 app.use('/api/konta', konta);
+app.use('/api/rodzajeDokumentu', rodzajeDokumentu);
 
 let server = app.listen(app.get('port'), () => {
     var port = server.address().port;
