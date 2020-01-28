@@ -7,7 +7,7 @@ module.exports = {
 
     getSprawaById: async function (req, res) {
         try {
-            const sprawa = await Task.findById(req.params.sprawaId);
+            const sprawa = await Sprawa.findById(req.params.sprawaId);
             res.send(sprawa);
         } catch (error) {
             console.log(error);
@@ -28,6 +28,8 @@ module.exports = {
 
     createSprawa: async function (req, res) {
         try {
+            req.body.wysłana = false;
+            req.body.usunięta = false;
             const {
                 error
             } = validate(req.body);
