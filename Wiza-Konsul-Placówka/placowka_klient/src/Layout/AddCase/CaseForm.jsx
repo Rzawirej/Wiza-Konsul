@@ -9,12 +9,12 @@ class CaseForm extends React.Component{
         imie:'',
         imie2:'',
         nazwisko:'',
-        cel:'',
+        cel:'1',
         kraj:'',
         obywatelstwo:'',
         nrd:'',
-        rodzaj:'',
-        rodzajW:'',
+        rodzaj:'Dowód osobisty',
+        rodzajW:'A',
         plec:'',
         opis:'',
         nri:'',
@@ -45,15 +45,15 @@ class CaseForm extends React.Component{
     };
 componentDidMount()
 {
-    //axios.defaults.baseURL = 'http://localhost:5001/api';
+    axios.defaults.baseURL = 'http://localhost:5001/api';
     this.setCele();
-   // this.getData();
+   this.getData();
 }
 handleChange(event) {
     this.setState({
         [event.target.name]: event.target.value,
     });
-    console.log(event.target.value);
+    
   }
   handleCheckBoxChange(event)
   {
@@ -71,7 +71,7 @@ handleRadioChange(value)
     {
         this.setState({plec:'F'})
     }
-      console.log(value)
+      
       }
 handleSubmit(event)
 {
@@ -187,7 +187,7 @@ async saveSprawa(sprawa)
         
         });
         if(response.name != "Error"){
-          this.props.changeIsAdding();
+          
         }
       }
       catch(e)
@@ -200,21 +200,21 @@ async saveSprawa(sprawa)
       }
       }
 }
-/*async getData ()
+async getData ()
 {
     try {
-        const response = await axios.get('/rodzajeDokumentow');
+        const response = await axios.get('/rodzajeDokumentu');
         this.setState({
             dokumenty: response.data
         });
     } catch (e) {
         console.log(JSON.parse(JSON.stringify(e)));
     }
-};*/
+};
 render()
 {
     return(
-            <CaseFormView dokumenty={['Dowód osobisty','Prawo jazdy','Paszport']} cele_wizyt={this.state.cele_wizyt} imie={this.state.imie}
+            <CaseFormView dokumenty={this.state.dokumenty} cele_wizyt={this.state.cele_wizyt} imie={this.state.imie}
             imie2={this.state.imie2} nazwisko={this.state.nazwisko} cel={this.state.cel} kraj={this.state.kraj} nri={this.state.nri}
              obywatelstwo={this.state.obywatelstwo} opis={this.state.opis} handleReturn={this.props.handleReturn} rodzaj={this.state.rodzaj} rodzajW={this.state.rodzajW}
             nrd={this.state.nrd} plec={this.state.plec} opłata={this.state.opłata} handleRadioChange={this.handleRadioChange} 

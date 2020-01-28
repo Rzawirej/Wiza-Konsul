@@ -1,5 +1,5 @@
-import react from 'react';
-import MenuKVIew from '../MenuKVIew.js'
+import React from 'react';
+import MenuKVIew from './MenuKVIew'
 class MenuK extends React.Component{
 
     constructor(props)
@@ -8,6 +8,7 @@ class MenuK extends React.Component{
     }
     render()
     {
-        return(<MenuKVIew/>)
+        return(<MenuKVIew handleTake={this.props.handleTake}/>)
     }
 }
+export default MenuK;

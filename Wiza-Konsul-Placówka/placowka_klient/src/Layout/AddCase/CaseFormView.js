@@ -1,5 +1,5 @@
 import React from 'react'
-import { Form, Radio,Grid,Button } from 'semantic-ui-react'
+import { Form, Radio,Grid,Button, Input } from 'semantic-ui-react'
 const CaseFormView =(props) =>
 {
     const{
@@ -32,7 +32,7 @@ return <option value={cel}>{cel}</option>
 });
 const errorStyle={color: 'red'};
 const dokList=  dokumenty.map((dok)=>{
-  return <option name={dok} value={dok}>{dok}</option>
+  return <option name="rodzaj" value={dok.rodzaj}>{dok.rodzaj}</option>
   });
 return(
   
@@ -167,7 +167,7 @@ return(
     </Grid.Row>
   <Grid.Row >
     <label>Opis:</label>
-<input style={{height:"150px"}} name="opis" value={opis} type="text" onChange={handleChange} onBlur={handleLostFocus}/>
+<Input fluid size='Huge' style={{height:"150px"}} name="opis" value={opis} type="text" onChange={handleChange} onBlur={handleLostFocus}/>
 <span style={errorStyle}>{errors.opis}</span>
   </Grid.Row>
 <Grid.Row>
