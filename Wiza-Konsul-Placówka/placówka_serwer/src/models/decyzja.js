@@ -36,7 +36,7 @@ const Decyzja = mongoose.model('Decyzja', decyzjaSchema, 'Decyzje');
 function validateDecyzja(decyzja) {
     const schema = {
         rodzaj: Joi.string().min(1).required(),
-        data: Joi.date().required(),
+       
         uzasadnienie: Joi.string().min(1).required(),
         kierownik: Joi.string().min(1).required(),
         identyfikator:Joi.string().min(1).required(),

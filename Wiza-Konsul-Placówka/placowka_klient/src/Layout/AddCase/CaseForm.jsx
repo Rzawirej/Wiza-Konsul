@@ -185,6 +185,7 @@ async saveSprawa(sprawa)
         obywatelstwo: sprawa.obywatelstwo,
         celWydania:sprawa.celWydania,
         rodzajWizy:sprawa.rodzajWizy,
+        pracownik:sprawa.pracownik,
         rodzaj:sprawa.rodzaj
         
         
@@ -193,6 +194,7 @@ async saveSprawa(sprawa)
         if(response.name != "Error"){
           
         }
+        this.props.handleReturn();
       }
       catch(e)
       {
@@ -200,9 +202,10 @@ async saveSprawa(sprawa)
       
       console.log(message);
       if (message == undefined) {
-        this.props.changeIsAdding('');
+       
       }
       }
+      
 }
 async getData ()
 {

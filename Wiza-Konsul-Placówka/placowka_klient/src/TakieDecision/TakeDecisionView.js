@@ -13,6 +13,7 @@ const MenuKVIew = (props) =>
         handleSave,
         errors,
         uzasadnienie,
+        handleLostFocus,
         rodzajDecyzji
     }=props;
     const errorStyle={color: 'red'};
@@ -154,7 +155,7 @@ const MenuKVIew = (props) =>
   <Grid.Row>
       <Grid.Column >
       <label>Uzasadnienie decyzji: </label>
-      <Input name="uzasadnienie" value={uzasadnienie} type="text" onChange={handleChange} size="huge" fluid/>
+      <Input name="uzasadnienie" value={uzasadnienie} type="text" onChange={handleChange} size="huge" fluid onBlur={handleLostFocus}/>
       <span style={errorStyle}>{errors.uzasadnienie}</span>
      
       </Grid.Column>
