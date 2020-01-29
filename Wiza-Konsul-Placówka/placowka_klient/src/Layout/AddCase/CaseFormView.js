@@ -166,9 +166,11 @@ return(
    
     </Grid.Row>
   <Grid.Row >
+    <Grid.Column>
     <label>Opis:</label>
-<Input fluid size='Huge' style={{height:"150px"}} name="opis" value={opis} type="text" onChange={handleChange} onBlur={handleLostFocus}/>
+<Input fluid size='huge' style={{height:"150px"}} name="opis" value={opis} type="text" onChange={handleChange} onBlur={handleLostFocus}/>
 <span style={errorStyle}>{errors.opis}</span>
+</Grid.Column>
   </Grid.Row>
 <Grid.Row>
   <div class="inline fields">

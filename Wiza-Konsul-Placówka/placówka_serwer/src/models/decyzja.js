@@ -18,15 +18,17 @@ const decyzjaSchema = new mongoose.Schema({
         minlength: 1,
         required: true
     },
-    sprawa:{
-        type: String,
-        minlength: 1,
-        required: true
-    },
+    
     kierownik: {
         type: String,
         minlength: 1,
         required: true
+    },
+    identyfikator:
+    {
+        type:String,
+        minlength:1,
+        required:true
     },
 
 });
@@ -37,8 +39,8 @@ function validateDecyzja(decyzja) {
         rodzaj: Joi.string().min(1).required(),
         data: Joi.date().required(),
         uzasadnienie: Joi.string().min(1).required(),
-        sprawa: Joi.string().min(1).required(),
         kierownik: Joi.string().min(1).required(),
+        identyfikator:Joi.string().min(1).required(),
     }
     return Joi.validate(decyzja, schema);
 }

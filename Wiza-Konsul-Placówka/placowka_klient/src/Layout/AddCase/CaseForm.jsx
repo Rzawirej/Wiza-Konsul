@@ -1,6 +1,9 @@
 import React from 'react';
 import axios from 'axios';
 import CaseFormView from './CaseFormView';
+
+
+
 class CaseForm extends React.Component{
     constructor (props)
     {
@@ -84,13 +87,14 @@ handleSubmit(event)
                     numerDokumentuIdentyfikującego:this.state.nrd,
                     zdjęcie:'http://i2.pinger.pl/pgr214/99df58d50000ecb050f1ff76/slodki-kotek-5.jpeg',
                     treść:this.state.opis,
-                    identyfikator:'1',
+                    identyfikator:String(this.props.identyfikator),
                     płeć:this.state.plec,
                     opłata: this.state.opłata===true ? 23.2 : 0  ,
                     krajPochodzenia:this.state.kraj,
                     obywatelstwo: this.state.obywatelstwo,
                     celWydania:this.state.cel,
                     rodzajWizy:this.state.rodzajW,
+                    pracownik:"KleofasN",
                     rodzaj:'Wiza'
                 
                 })

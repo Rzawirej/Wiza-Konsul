@@ -32,20 +32,38 @@ handleChange(event) {
 handleSave()
 {
     if(this.validateForm(this.state.errors)) {
-    this.saveDecyzja({rodzajDecyzji:TimeRanges.state.rodzajDecyzji, uzasadnienie:this.state.uzasadnienie, identyfikator:'1'})    
+    this.saveDecyzja({rodzaj:this.state.rodzajDecyzji, uzasadnienie:this.state.uzasadnienie, identyfikator:String(this.props.idd), kierownik:"MaciejNH"})    
     }
 }
 async saveDecyzja(decyzja)
 {
     console.log(decyzja)
     try {
-        const response = await axios.post('/sprawy', {rodzajDecyzji:decyzja.rodzajDecyzji,
-            uzasadnienie:decyzja.uzasadnienie,identyfikator:decyzja.identyfikator
+        const response = await axios.post('/sprawy', {rodzaj:decyzja.rodzaj,
+            uzasadnienie:decyzja.uzasadnienie,kierownik:decyzja.kierwonik,identyfikator:decyzja.identyfikator});
         
-        
-        
+        const response2 = await axios.put('/sprawy', {imiona:this.props.sprawa.imiona,
+            nazwisko:this.props.sprawa.nazwisko,
+            płeć:this.props.sprawa.płeć,
+            krajowyNumerIdentyfikacyjny:this.props.sprawa.krajowyNumerIdentyfikacyjny,
+            numerDokumentuIdentyfikującego:this.props.sprawa.numerDokumentuIdentyfikującego,
+            zdjęcie:this.props.sprawa.zdjęcie,
+            treść:this.props.sprawa.treść,
+            identyfikator:this.props.sprawa.identyfikator,
+            płeć:this.props.sprawa.płeć,
+            opłata: this.props.sprawa.opłata ,
+            krajPochodzenia:this.props.sprawa.krajPochodzenia,
+            obywatelstwo: this.props.sprawa.obywatelstwo,
+            celWydania:this.props.sprawa.celWydania,
+            rodzajWizy:this.props.sprawa.rodzajWizy,
+            rodzaj:this.props.sprawa.rodzaj,
+            pracownik:this.props.pracownik,
+            decyzja:decyzja.identyfikator
         });
         if(response.name != "Error"){
+          
+        }
+        if(response2.name != "Error"){
           
         }
       }

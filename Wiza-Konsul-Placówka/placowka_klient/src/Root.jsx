@@ -8,10 +8,11 @@ import axios from 'axios';
 import MenuK from './MenuKierownik/MenuK';
 import TakeDecision from './TakieDecision/TakeDecision';
 
+
 class Root extends React.Component {   
     constructor(props) {
         super(props)
-        this.state = {lista: [],values:"test",menu:true, wydawanie:true, podejmij:true, sprawa:null}
+        this.state = {lista: [],values:"test",menu:true, wydawanie:true, podejmij:true, sprawa:null , identyfikator:0, decyzje:[], idd:0}
        this.menuChangeF=this.menuChangeF.bind(this);
        this.menuChangeT=this.menuChangeT.bind(this);
        this.wydawanieChangeF=this.wydawanieChangeF.bind(this);
@@ -62,11 +63,18 @@ async wybierzSprawę(id)
         {
             try{
                 const response = await axios.get('/sprawy');
-                this.setState({ lista: response.data });
+                const response2 = await axios.get('/decyzje');
+                this.setState({ lista: response.data ,decyzje:response2.data});
             } catch (e) {
                 console.log(JSON.parse(JSON.stringify(e)));
             }
             console.log(this.state.lista);
+            if(this.state.lista.length>0){
+            this.setState({identyfikator:Number(this.state.lista[0].identyfikator)+1})
+            }
+            if(this.state.decyzje.length>0){
+                this.setState({idd:Number(this.state.decyzje[0].identyfikator)+1})
+                }
      };
            
      
@@ -87,7 +95,7 @@ async wybierzSprawę(id)
                         <Grid.Row height={10}>
                         <Grid.Column width={12} style={{height:'60vh'}}>
                             <div >
-                            <SprawyList  sprawy={this.state.lista} wybierzSprawę={this.wybierzSprawę}></SprawyList>
+                            <SprawyList  sprawy={this.state.lista} wybierzSprawę={this.wybierzSprawę} ></SprawyList>
                             </div>
                         </Grid.Column>
             </Grid.Row>
@@ -102,7 +110,7 @@ async wybierzSprawę(id)
         )}
     else{
         return(
-            <CaseForm handleReturn={this.menuChangeT}/>
+            <CaseForm handleReturn={this.menuChangeT} identyfikator={this.state.identyfikator}/>
         )
     }
 }
@@ -120,7 +128,7 @@ async wybierzSprawę(id)
             <Grid.Row height={10}>
             <Grid.Column width={12} style={{height:'60vh'}}>
                 <div >
-                <SprawyList  sprawy={this.state.lista}  wybierzSprawę={this.wybierzSprawę}></SprawyList>
+                <SprawyList  sprawy={this.state.lista}  wybierzSprawę={this.wybierzSprawę} id={this.state.identyfikator}></SprawyList>
                 </div>
             </Grid.Column>
             </Grid.Row> 
@@ -133,7 +141,7 @@ async wybierzSprawę(id)
         }
         else{
             return(
-            <TakeDecision sprawa={this.state.sprawa} handleReturn={this.wydawanieChangeT} />
+            <TakeDecision sprawa={this.state.sprawa} handleReturn={this.wydawanieChangeT} idd={this.state.idd} />
             )
         }
     }
