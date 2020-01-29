@@ -39,10 +39,10 @@ async saveDecyzja(decyzja)
 {
     console.log(decyzja)
     try {
-        const response = await axios.post('/sprawy', {rodzaj:decyzja.rodzaj,
-            uzasadnienie:decyzja.uzasadnienie,kierownik:decyzja.kierwonik,identyfikator:decyzja.identyfikator});
+        const response = await axios.post('/decyzje', {rodzaj:decyzja.rodzaj,
+            uzasadnienie:decyzja.uzasadnienie,kierownik:decyzja.kierownik,identyfikator:decyzja.identyfikator});
         
-        const response2 = await axios.put('/sprawy', {imiona:this.props.sprawa.imiona,
+        const response2 = await axios.put('/sprawy/'+this.props.sprawa.identyfikator, {imiona:this.props.sprawa.imiona,
             nazwisko:this.props.sprawa.nazwisko,
             płeć:this.props.sprawa.płeć,
             krajowyNumerIdentyfikacyjny:this.props.sprawa.krajowyNumerIdentyfikacyjny,
@@ -76,6 +76,7 @@ async saveDecyzja(decyzja)
         this.props.changeIsAdding('');
       }
       }
+      this.props.handleReturn();
 }
 validateForm = (errors) => {
     let valid = true;
@@ -108,8 +109,8 @@ render()
 {
     return(
 
-        <TakeDecisionView sprawa={this.props.sprawa} handleReturn={this.props.handleReturn} errors={this.state.errors} 
-        uzasadnienie={this.state.uzasanienie} rodzajDecyzji={this.rodzajDecyzji} />
+        <TakeDecisionView sprawa={this.props.sprawa} handleReturn={this.props.handleReturn} errors={this.state.errors} handleChange={this.handleChange}
+        uzasadnienie={this.state.uzasadnienie} rodzajDecyzji={this.rodzajDecyzji} handleSave={this.handleSave} handleLostFocus={this.handleLostFovus}  />
     )
 }
 

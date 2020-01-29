@@ -70,10 +70,10 @@ async wybierzSprawę(id)
             }
             console.log(this.state.lista);
             if(this.state.lista.length>0){
-            this.setState({identyfikator:Number(this.state.lista[0].identyfikator)+1})
+            this.setState({identyfikator:Number(this.state.lista[this.state.lista.length-1].identyfikator)+1})
             }
             if(this.state.decyzje.length>0){
-                this.setState({idd:Number(this.state.decyzje[0].identyfikator)+1})
+                this.setState({idd:Number(this.state.decyzje[this.state.decyzje.length-1].identyfikator)+1})
                 }
      };
            
