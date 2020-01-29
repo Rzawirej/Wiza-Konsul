@@ -227,6 +227,7 @@ class KontaForm extends React.Component{
         errors={this.state.errors}
         placowkaExists={this.state.placowkaExists}
         loginExists={this.state.loginExists}
+        rola={this.state.rola}
         handleChange={this.handleChange}
         changeIsAdding={this.props.changeIsAdding}
         handleLostFocus={this.handleLostFocus}

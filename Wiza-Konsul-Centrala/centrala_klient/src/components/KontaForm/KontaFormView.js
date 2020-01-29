@@ -14,6 +14,7 @@ const KontaFormView = (props) => {
         haslo,
         placowka,
         errors,
+        rola,
         placowkaExists,
         loginExists,
         handleChange,
@@ -58,7 +59,7 @@ const KontaFormView = (props) => {
         <span style={errorStyle}>{errors.placowka}</span>
         <span style={errorStyle}>{placowkaExists}</span>
         
-        <Form.Field inline label='Rola' control='select' name="rola" onChange={handleChange}>
+        <Form.Field inline label='Rola' control='select' value={rola} name="rola" onChange={handleChange}>
           <option value='PracownikPlacówki'>Pracownik Placówki</option>
           <option value='KierownikPlacówki'>Kierownik Placówki</option>
           <option value='PracownikCentrali'>Pracownik Centrali</option>

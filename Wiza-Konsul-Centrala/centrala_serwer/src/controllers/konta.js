@@ -47,9 +47,17 @@ module.exports = {
     },
     getAllKonta: async function (req, res) {
         try {
-            const konta = await Konto.find(function (err, konto) {
-                if (err) return console.error(err);
-            })
+            const pageNumber = req.query.pageNumber;
+            const pageSize = req.query.pageSize;
+            const login = req.query.login;
+            const loginRegExp = new RegExp(login, "i");
+            let konta;
+            if(pageNumber == undefined || pageSize == undefined){
+                konta = await Konto.find({ login: loginRegExp })
+            }else{
+                konta = await Konto. find({ login: loginRegExp }).skip((pageNumber - 1) * pageSize).limit(pageSize*1);
+            }
+            
             res.status(200).send(konta);
         } catch (ex) {
             return res.status(404).send(ex)
