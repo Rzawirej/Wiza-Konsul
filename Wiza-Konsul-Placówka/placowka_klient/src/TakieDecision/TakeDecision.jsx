@@ -18,6 +18,7 @@ constructor (props)
     this.handleChange=this.handleChange.bind(this);
     this.handleSave=this.handleSave.bind(this);
     this.saveDecyzja=this.saveDecyzja.bind(this);
+    this.handleLostFocus=this.handleLostFocus.bind(this);
 }
 componentDidMount()
 {
