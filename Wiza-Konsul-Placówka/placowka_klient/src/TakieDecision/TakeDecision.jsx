@@ -1,5 +1,6 @@
 import React from 'react';
 import TakeDecisionView from './TakeDecisionView';
+import axios from 'axios';
 
 class TakeDecision extends React.Component
 {
@@ -31,12 +32,32 @@ handleChange(event) {
 handleSave()
 {
     if(this.validateForm(this.state.errors)) {
-    this.saveDecyzja({rodzajDecyzji:TimeRanges.state.rodzajDecyzji, uzasadnienie:this.state.uzasadnienie})    
+    this.saveDecyzja({rodzajDecyzji:TimeRanges.state.rodzajDecyzji, uzasadnienie:this.state.uzasadnienie, identyfikator:'1'})    
     }
 }
-saveDecyzja(decyzja)
+async saveDecyzja(decyzja)
 {
-
+    console.log(decyzja)
+    try {
+        const response = await axios.post('/sprawy', {rodzajDecyzji:decyzja.rodzajDecyzji,
+            uzasadnienie:decyzja.uzasadnienie,identyfikator:decyzja.identyfikator
+        
+        
+        
+        });
+        if(response.name != "Error"){
+          
+        }
+      }
+      catch(e)
+      {
+        const message = JSON.parse(JSON.stringify(e)).message;
+      
+      console.log(message);
+      if (message == undefined) {
+        this.props.changeIsAdding('');
+      }
+      }
 }
 validateForm = (errors) => {
     let valid = true;
