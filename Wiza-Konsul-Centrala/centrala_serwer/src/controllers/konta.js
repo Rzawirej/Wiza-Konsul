@@ -14,7 +14,6 @@ module.exports = {
             const {
                 error
             } = validate(req.body);
-            console.log(req.bdoy)
             if (error) return res.status(400).send(error.details[0].message);
            
             const placowka = await Placowka.find({

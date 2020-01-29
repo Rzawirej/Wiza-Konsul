@@ -48,4 +48,25 @@ module.exports = {
             return res.status(404).send(e);
         }
     },
+    editSprawa: async function (req, res) {
+        try {
+            const {
+                error
+            } = validate(req.body);
+            if (error) return res.status(400).send(error.details[0].message);
+
+
+            const sprawa = await Sprawa.findOneAndUpdate({
+                login: req.params.identyfikator
+            }, {
+                $set: req.body
+            }, {
+                new: true
+            });
+            res.status(200).send(sprawa);
+        } catch (e) {
+            console.log(e);
+            return res.status(404).send(e);
+        }
+    },
 }
