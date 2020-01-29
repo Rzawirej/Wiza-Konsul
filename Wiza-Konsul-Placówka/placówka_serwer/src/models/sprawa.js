@@ -87,6 +87,17 @@ const sprawaSchema = new mongoose.Schema({
         maxlength: 64,
         required: true
     },
+    pracownik: {
+        type: String,
+        minlength: 1,
+        maxlength: 64,
+        required: true
+    },
+    decyzja: {
+        type: String,
+        minlength: 1,
+        maxlength: 64,
+    },
 });
 const Sprawa = mongoose.model('Sprawa', sprawaSchema, 'Sprawy');
 function validateSprawa(sprawa) {
@@ -106,8 +117,9 @@ function validateSprawa(sprawa) {
         obywatelstwo: Joi.string().min(1).max(64),
         celWydania: Joi.string().min(1).max(64),
         rodzajWizy: Joi.string().min(1).max(1),
-        rodzaj: Joi.string().min(1).max(64).required()
-
+        rodzaj: Joi.string().min(1).max(64).required(),
+        pracownik: Joi.string().min(1).max(64).required(),
+        decyzja: Joi.string().min(1).max(64)
     }
     return Joi.validate(sprawa, schema);
 }
