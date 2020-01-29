@@ -194,6 +194,7 @@ async saveSprawa(sprawa)
         if(response.name != "Error"){
           
         }
+        this.props.handleReturn();
       }
       catch(e)
       {
@@ -204,7 +205,7 @@ async saveSprawa(sprawa)
        
       }
       }
-      this.props.handleReturn();
+      
 }
 async getData ()
 {

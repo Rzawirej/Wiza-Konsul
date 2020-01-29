@@ -66,6 +66,7 @@ async saveDecyzja(decyzja)
         if(response2.name != "Error"){
           
         }
+        this.props.handleReturn();
       }
       catch(e)
       {
@@ -76,7 +77,7 @@ async saveDecyzja(decyzja)
         this.props.changeIsAdding('');
       }
       }
-      this.props.handleReturn();
+      
 }
 validateForm = (errors) => {
     let valid = true;
