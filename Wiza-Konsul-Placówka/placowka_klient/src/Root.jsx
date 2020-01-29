@@ -26,6 +26,7 @@ class Root extends React.Component {
       menuChangeT()
       {
           this.setState({menu:true});
+          this.getData();
       }
       wydawanieChangeF()
       {
@@ -39,6 +40,7 @@ class Root extends React.Component {
       wydawanieChangeT()
       {
           this.setState({wydawanie:true});
+          this.getData();
       }
 async wybierzSprawę(id)
 {
