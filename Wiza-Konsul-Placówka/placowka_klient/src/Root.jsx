@@ -141,7 +141,7 @@ async wybierzSprawę(id)
         }
         else{
             return(
-            <TakeDecision sprawa={this.state.sprawa} handleReturn={this.wydawanieChangeT} idd={this.state.idd} />
+            <TakeDecision sprawa={this.state.sprawa} handleReturn={this.wydawanieChangeT} idd={this.state.idd} pracownik={"Kichel"} />
             )
         }
     }

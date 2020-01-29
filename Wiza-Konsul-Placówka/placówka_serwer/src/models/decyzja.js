@@ -10,8 +10,7 @@ const decyzjaSchema = new mongoose.Schema({
     },
     data: {
         type: Date,
-        required: true,
-        default: Date.now
+        required: true
     },
     uzasadnienie:{
         type: String,
@@ -24,10 +23,10 @@ const decyzjaSchema = new mongoose.Schema({
         minlength: 1,
         required: true
     },
-    identyfikator:{
-        type:String,
-        minlength:1,
-        required:true
+    identyfikator: {
+        type: String,
+        minlength: 1,
+        required: true
     },
 
 });
@@ -36,7 +35,7 @@ const Decyzja = mongoose.model('Decyzja', decyzjaSchema, 'Decyzje');
 function validateDecyzja(decyzja) {
     const schema = {
         rodzaj: Joi.string().min(1).required(),
-       
+        data: Joi.date().required(),
         uzasadnienie: Joi.string().min(1).required(),
         kierownik: Joi.string().min(1).required(),
         identyfikator:Joi.string().min(1).required(),

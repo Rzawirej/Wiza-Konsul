@@ -42,41 +42,47 @@ async function getPlacowki() {
     }
 }
 
+function wyliczRaport(placowki, przesylki){
+    const raport = [];
+    placowki.forEach(placowka => {
+        const rPlacowka = {
+            placowka: placowka.identyfikator,
+            ilosc: 0,
+            minimalnaWielkosc: Number.MAX_SAFE_INTEGER,
+            sredniaWielkosc: 0,
+            maksymalnaWielkosc: 0
+        }
+        przesylki.forEach(przesylka =>{
+            if(przesylka.placowka == placowka.identyfikator){
+                const wielkoscPrzesylki = przesylka.sprawy.length;
+                rPlacowka.ilosc+= 1;
+                if(wielkoscPrzesylki < rPlacowka.minimalnaWielkosc){
+                    rPlacowka.minimalnaWielkosc = wielkoscPrzesylki;
+                }
+                rPlacowka.sredniaWielkosc+=wielkoscPrzesylki;
+                if (wielkoscPrzesylki > rPlacowka.maksymalnaWielkosc) {
+                    rPlacowka.maksymalnaWielkosc = wielkoscPrzesylki;
+                }
+            }
+        })
+            
+        if (rPlacowka.ilosc > 0) {
+            rPlacowka.sredniaWielkosc = rPlacowka.sredniaWielkosc / rPlacowka.ilosc;
+            raport.push(rPlacowka);
+        }
+    });
+    return raport;
+}
+
 module.exports = {
 
-    getAllPrzesylki: async function (req, res) {
+    getRaport: async function (req, res) {
         try {
             const przesylki = await getPrzesylki(req.query.okres)
             const placowki = await getPlacowki();
             
-            const raport = [];
-            placowki.forEach(placowka => {
-                const rPlacowka = {
-                    placowka: placowka.identyfikator,
-                    ilosc: 0,
-                    minimalnaWielkosc: Number.MAX_SAFE_INTEGER,
-                    sredniaWielkosc: 0,
-                    maksymalnaWielkosc: 0
-                }
-                przesylki.forEach(przesylka =>{
-                    if(przesylka.placowka == placowka.identyfikator){
-                        const wielkoscPrzesylki = przesylka.sprawy.length;
-                        rPlacowka.ilosc+= 1;
-                        if(wielkoscPrzesylki < rPlacowka.minimalnaWielkosc){
-                            rPlacowka.minimalnaWielkosc = wielkoscPrzesylki;
-                        }
-                        rPlacowka.sredniaWielkosc+=wielkoscPrzesylki;
-                        if (wielkoscPrzesylki > rPlacowka.maksymalnaWielkosc) {
-                            rPlacowka.maksymalnaWielkosc = wielkoscPrzesylki;
-                        }
-                    }
-                })
-                
-                if (rPlacowka.ilosc > 0) {
-                    rPlacowka.sredniaWielkosc = rPlacowka.sredniaWielkosc / rPlacowka.ilosc;
-                    raport.push(rPlacowka);
-                }
-            });
+            const raport = wyliczRaport(placowki, przesylki);
+            
             res.status(200).send(raport);
         } catch (ex) {
             return res.status(404).send(ex)

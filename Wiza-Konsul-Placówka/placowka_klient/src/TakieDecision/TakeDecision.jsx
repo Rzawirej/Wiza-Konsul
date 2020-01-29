@@ -10,8 +10,7 @@ constructor (props)
     this.state={
         uzasadnienie:'',
         rodzajDecyzji:'Pozytywna',
-        errors:
-        {
+        errors: {
             uzasadnienie:''
         }
     }
@@ -40,7 +39,7 @@ async saveDecyzja(decyzja)
 {
     console.log(decyzja)
     try {
-        const response = await axios.post('/decyzje', {rodzaj:decyzja.rodzaj,
+        const response = await axios.post('/decyzje', {rodzaj:decyzja.rodzaj, data: new Date(Date.now()),
             uzasadnienie:decyzja.uzasadnienie, kierownik:decyzja.kierownik, identyfikator:decyzja.identyfikator});
         
         const response2 = await axios.put('/sprawy/'+this.props.sprawa.identyfikator, {imiona:this.props.sprawa.imiona,
@@ -58,6 +57,8 @@ async saveDecyzja(decyzja)
             celWydania:this.props.sprawa.celWydania,
             rodzajWizy:this.props.sprawa.rodzajWizy,
             rodzaj:this.props.sprawa.rodzaj,
+            wysłana: this.props.sprawa.wysłana,
+            usunięta: this.props.sprawa.usunięta,
             pracownik:this.props.pracownik,
             decyzja:decyzja.identyfikator
         });
