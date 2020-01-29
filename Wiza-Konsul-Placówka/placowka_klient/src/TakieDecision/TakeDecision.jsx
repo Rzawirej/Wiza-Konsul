@@ -113,7 +113,7 @@ render()
     return(
 
         <TakeDecisionView sprawa={this.props.sprawa} handleReturn={this.props.handleReturn} errors={this.state.errors} handleChange={this.handleChange}
-        uzasadnienie={this.state.uzasadnienie} rodzajDecyzji={this.rodzajDecyzji} handleSave={this.handleSave} handleLostFocus={this.handleLostFovus}  />
+        uzasadnienie={this.state.uzasadnienie} rodzajDecyzji={this.rodzajDecyzji} handleSave={this.handleSave} handleLostFocus={this.handleLostFocus}  />
     )
 }
 
