@@ -40,7 +40,7 @@ async saveDecyzja(decyzja)
     console.log(decyzja)
     try {
         const response = await axios.post('/decyzje', {rodzaj:decyzja.rodzaj,
-            uzasadnienie:decyzja.uzasadnienie,kierownik:decyzja.kierownik,identyfikator:decyzja.identyfikator});
+            uzasadnienie:decyzja.uzasadnienie, kierownik:decyzja.kierownik, identyfikator:decyzja.identyfikator});
         
         const response2 = await axios.put('/sprawy/'+this.props.sprawa.identyfikator, {imiona:this.props.sprawa.imiona,
             nazwisko:this.props.sprawa.nazwisko,
