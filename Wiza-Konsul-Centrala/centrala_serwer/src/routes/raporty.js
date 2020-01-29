@@ -1,11 +1,11 @@
 const express = require('express');
 const router = express.Router();
-const przesylkiController = require('../controllers/przesylki');
+const raportyController = require('../controllers/raporty');
 const autho = require('../middleware/autho');
 
-// Base route /api/przesylki
+// Base route /api/raporty
 router
     .route('/')
-    .get(przesylkiController.getAllPrzesylki);
+    .get(raportyController.getRaport);
 
 module.exports = router;

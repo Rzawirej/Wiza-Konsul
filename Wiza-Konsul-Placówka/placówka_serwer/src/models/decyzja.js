@@ -24,8 +24,7 @@ const decyzjaSchema = new mongoose.Schema({
         minlength: 1,
         required: true
     },
-    identyfikator:
-    {
+    identyfikator: {
         type:String,
         minlength:1,
         required:true
