@@ -10,10 +10,12 @@ module.exports = {
             const {
                 error
             } = validate(req.body);
-            if (error) return res.status(400).send(error.details[0].message);
-
+            if (error) {
+                
+                return res.status(400).send(error.details[0].message);
+            }
             const decyzja = new Decyzja(req.body);
-
+            
             await decyzja.save(function (err, decyzja) {
                 if (err) return console.error(err);
             });
