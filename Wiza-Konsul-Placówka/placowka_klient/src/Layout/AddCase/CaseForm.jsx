@@ -186,8 +186,8 @@ async saveSprawa(sprawa)
         celWydania:sprawa.celWydania,
         rodzajWizy:sprawa.rodzajWizy,
         pracownik:sprawa.pracownik,
-        rodzaj:sprawa.rodzaj
-        
+        rodzaj:sprawa.rodzaj,
+        decyzja:"holder"
         
         
         });
