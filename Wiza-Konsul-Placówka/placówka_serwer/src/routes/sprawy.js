@@ -12,11 +12,11 @@ router
     .post(sprawyController.createSprawa);
 
 router
-    .route('/:taskId')
+    .route('/:id')
     .get(sprawyController.getSprawaById)
 
 router
-  .route('/:taskId')
+  .route('/:id')
   .put(sprawyController.editSprawa)
 
 module.exports = router;

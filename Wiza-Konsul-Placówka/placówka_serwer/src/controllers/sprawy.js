@@ -6,12 +6,13 @@ const {
 module.exports = {
 
     getSprawaById: async function (req, res) {
-        try {
-            const sprawa = await Sprawa.findById(req.params.sprawaId);
-            res.send(sprawa);
-        } catch (error) {
-            console.log(error);
-            res.status(500).send('Error occurred');
+       try {
+            const sprawa = await Sprawa.findOne({
+                identyfikator: req.params.id
+            });
+            res.status(200).send(sprawa);
+        } catch (ex) {
+            return res.status(404).send(ex)
         }
     },
 
@@ -57,7 +58,7 @@ module.exports = {
 
 
             const sprawa = await Sprawa.findOneAndUpdate({
-                login: req.params.identyfikator
+                identyfikator: req.params.id
             }, {
                 $set: req.body
             }, {

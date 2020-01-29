@@ -4,5 +4,6 @@ const raportyR = rewire('../src/controllers/raporty');
 const wyliczRaport = raportyR.__get__('wyliczRaport');
 
 test('wyliczRaport - pusty', () =>{
-    console.log(wyliczRaport([],[]));
+    const result = wyliczRaport([],[]);
+    expect(result).toBe([]);
 });
