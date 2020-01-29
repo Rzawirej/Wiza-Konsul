@@ -25,15 +25,19 @@ const RaportyWorkPlaceView = (props) => {
             <Segment textAlign="left">
                  <Header as='h2' textAlign='center'>Raport o przesyłkach z {raport.okresCzasu}</Header>
                  <List >
-                    <List.Item>
-                        Placówka 1:
-                        <List.List>
-                            <List.Item>Ilość przesyłek: 24</List.Item>
-                            <List.Item>Minimalna wielkość przesyłki: 2</List.Item>
-                            <List.Item>Średnia wielkość przesyłki: 5,67</List.Item>
-                            <List.Item>Maksymalna wielkość przesyłki: 23</List.Item>
-                        </List.List>
-                    </List.Item>
+                    {props.raport.polaRaportu.map((poleRaportu) => {
+                            return (
+                                <List.Item>
+                                    Placówka {poleRaportu.placowka}:
+                                    <List.List>
+                                        <List.Item>Ilość przesyłek: {poleRaportu.ilosc}</List.Item>
+                                        <List.Item>Minimalna wielkość przesyłki: {poleRaportu.minimalnaWielkosc}</List.Item>
+                                        <List.Item>Średnia wielkość przesyłki: {poleRaportu.sredniaWielkosc}</List.Item>
+                                        <List.Item>Maksymalna wielkość przesyłki: {poleRaportu.maksymalnaWielkosc}</List.Item>
+                                    </List.List>
+                                </List.Item>
+                                
+                                );})}
                 </List>
             </Segment>
            : <> </>}

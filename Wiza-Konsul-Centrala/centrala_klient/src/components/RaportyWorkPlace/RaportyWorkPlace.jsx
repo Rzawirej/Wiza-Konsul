@@ -1,5 +1,6 @@
 import React from 'react';
 import RaportyWorkPlaceView from "./RaportyWorkPlaceView";
+import axios from "axios";
 
 class RaportyWorkPlace extends React.Component {
     constructor(props) {
@@ -22,7 +23,7 @@ class RaportyWorkPlace extends React.Component {
             [event.target.name]: event.target.value,
         });
     }
-    handleSubmit(event) {
+    async handleSubmit(event) {
         let raportOkres='';
         switch(this.state.okresCzasu){
             case '15Minut':
@@ -38,9 +39,17 @@ class RaportyWorkPlace extends React.Component {
                 raportOkres="ostatniego tygodnia"
                 break;
         }
+
+        const response = await axios.get('/przesylki', {
+            params: {
+                okres: this.state.okresCzasu
+            }
+        });
+        console.log(response.data);
         this.setState({
             raport: {
-                okresCzasu: raportOkres
+                okresCzasu: raportOkres,
+                polaRaportu: response.data
             }
         })    
         
