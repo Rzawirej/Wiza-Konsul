@@ -55,7 +55,7 @@ module.exports = {
                     error
                 } = validate(req.body);
                 if (error) return res.status(400).send(error.details[0].message);
-
+                req.body.placowka = 1;
                 let konto
                 if (req.params.login == req.body.login) {
                     konto = [];

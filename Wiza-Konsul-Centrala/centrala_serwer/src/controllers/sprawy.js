@@ -6,12 +6,13 @@ const {
 module.exports = {
 
     getSprawaById: async function (req, res) {
-        try {
-            const sprawa = await Task.findById(req.params.sprawaId);
-            res.send(sprawa);
-        } catch (error) {
-            console.log(error);
-            res.status(500).send('Error occurred');
+       try {
+            const sprawa = await Sprawa.findOne({
+                identyfikator: req.params.id
+            });
+            res.status(200).send(sprawa);
+        } catch (ex) {
+            return res.status(404).send(ex)
         }
     },
 
@@ -28,6 +29,8 @@ module.exports = {
 
     createSprawa: async function (req, res) {
         try {
+            req.body.wysłana = false;
+            req.body.usunięta = false;
             const {
                 error
             } = validate(req.body);
@@ -40,6 +43,27 @@ module.exports = {
                 if (err) return console.error(err);
             });
 
+            res.status(200).send(sprawa);
+        } catch (e) {
+            console.log(e);
+            return res.status(404).send(e);
+        }
+    },
+    editSprawa: async function (req, res) {
+        try {
+            const {
+                error
+            } = validate(req.body);
+            if (error) return res.status(400).send(error.details[0].message);
+
+
+            const sprawa = await Sprawa.findOneAndUpdate({
+                identyfikator: req.params.id
+            }, {
+                $set: req.body
+            }, {
+                new: true
+            });
             res.status(200).send(sprawa);
         } catch (e) {
             console.log(e);

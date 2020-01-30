@@ -32,13 +32,14 @@ module.exports = {
             await konto.save(function (err, konto) {
                 if (err) return console.error(err);
             });
-            axios.defaults.baseURL = 'http://localhost:5001/api';
-            try {
-                await axios.post('/konta', req.body);
-            } catch (e) {
-                 console.log(JSON.parse(JSON.stringify(e)));
+            if(konto.placowka == "1"){
+                axios.defaults.baseURL = 'http://localhost:5001/api';
+                try {
+                    await axios.post('/konta', req.body);
+                } catch (e) {
+                    console.log(JSON.parse(JSON.stringify(e)));
+                }
             }
-
             res.status(200).send(konto);
         } catch (e) {
             console.log(e);
@@ -72,12 +73,15 @@ module.exports = {
             if(konto == undefined){
                 return res.status(404).send('Nie ma takiego konta');
             }
-            axios.defaults.baseURL = 'http://localhost:5001/api';
-            try {
-                await axios.delete('/konta/' + req.params.login, req.body);
-            } catch (e) {
-                console.log(JSON.parse(JSON.stringify(e)));
+            if(konto.placowka == "1"){
+                axios.defaults.baseURL = 'http://localhost:5001/api';
+                try {
+                    await axios.delete('/konta/' + req.params.login, req.body);
+                } catch (e) {
+                    console.log(JSON.parse(JSON.stringify(e)));
+                }
             }
+            
             res.send(konto);
         } catch (e) {
             res.status(500).send('Error occurred');
@@ -105,7 +109,9 @@ module.exports = {
             if (konto.length > 0 && placowka.length == 0) return res.status(409).send({ message: 'Login i Placowka' });
             if (placowka.length == 0) return res.status(407).send({message :"Placowka"});
             if (konto.length > 0) return res.status(408).send({ message: 'Login' });
-
+            const oldKonto = await Konto.find({
+                login: req.params.login
+            });
             const newKonto = await Konto.findOneAndUpdate(
                 {login: req.params.login}, {
                     $set: req.body
@@ -113,12 +119,39 @@ module.exports = {
                     new: true
                 }
             );
-            axios.defaults.baseURL = 'http://localhost:5001/api';
-            try {
-                await axios.put('/konta/'+req.body.login, req.body);
-            } catch (e) {
-                console.log(JSON.parse(JSON.stringify(e)));
+            console.log(oldKonto.placowka + "" + newKonto.placowka)
+            if (newKonto.placowka == "1") {
+                axios.defaults.baseURL = 'http://localhost:5001/api';
+            
+                try {
+                    console.log('/konta/'+req.params.login);
+                    await axios.put('/konta/'+req.params.login, req.body);
+                } catch (e) {
+                    console.log(JSON.parse(JSON.stringify(e)));
+                }
             }
+            if(oldKonto.placowka == "1" && newKonto.placowka != "1"){
+   
+                axios.defaults.baseURL = 'http://localhost:5001/api';
+                try {
+                    await axios.delete('/konta/' + req.params.login, req.body);
+                } catch (e) {
+                    console.log(JSON.parse(JSON.stringify(e)));
+                }
+                
+            }
+            if (oldKonto.placowka == "1" && newKonto.placowka == "1") {
+
+                axios.defaults.baseURL = 'http://localhost:5001/api';
+                try {
+                    await axios.post('/konta', req.body);
+                } catch (e) {
+                    console.log(JSON.parse(JSON.stringify(e)));
+                }
+
+            }
+            
+            
             res.status(200).send(newKonto);
         } catch (e) {
             console.log(e);
