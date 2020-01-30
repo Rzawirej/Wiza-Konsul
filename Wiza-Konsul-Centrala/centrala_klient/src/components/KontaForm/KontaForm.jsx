@@ -23,6 +23,7 @@ class KontaForm extends React.Component{
           },
           placowkaExists: '',
           loginExists: '',
+          placowkaRolaConflict: ''
       }
       this.handleChange = this.handleChange.bind(this);
       this.handleSubmit = this.handleSubmit.bind(this);
@@ -98,7 +99,10 @@ class KontaForm extends React.Component{
         break;
       case 'placowka': 
         errors.placowka = 
-          value.length == 0 ? 'Id placówki to pole obowiązkowe' :'';
+          value.length == 0 ? 'Id placówki to pole obowiązkowe' :
+           !/^\d+$/.test(value)
+           ? 'Id placówki przyjmuje tylko cyfry'
+           : '';
         break;
       default:
         break;
@@ -107,8 +111,21 @@ class KontaForm extends React.Component{
     this.setState({errors, [name]: value})
   }
 
-  handleSubmit(event) {
-    if (this.validateForm(this.state.errors)) {
+  async handleSubmit(event) {
+    this.state.placowkaRolaConflict = '';
+    if(this.state.rola == "AdministratorCentrali" && this.state.placowka != "0" ||
+    this.state.rola == "PracownikCentrali" && this.state.placowka != "0"  ){
+      await this.setState({
+        placowkaRolaConflict : 'Nie można dodać '+this.state.rola+' do placówki'
+      });
+    }
+    if (this.state.rola == "PracownikPlacówki" && this.state.placowka == "0" ||
+      this.state.rola == "KierownikPlacówki" && this.state.placowka == "0"){
+        await this.setState({
+        placowkaRolaConflict : 'Nie można dodać '+this.state.rola+' do centrali'
+      });
+    }
+    if (this.validateForm(this.state.errors) && this.state.placowkaRolaConflict.length == 0) {
       this.saveKonto({
         imiona: this.state.imiona,
         nazwisko: this.state.nazwisko,
@@ -124,8 +141,22 @@ class KontaForm extends React.Component{
     event.preventDefault();
   }
 
-  handleSubmitEdit(event) {
-    if (this.validateForm(this.state.errors)) {
+  async handleSubmitEdit(event) {
+    this.state.placowkaRolaConflict = '';
+    if(this.state.rola == "AdministratorCentrali" && this.state.placowka != "0" ||
+    this.state.rola == "PracownikCentrali" && this.state.placowka != "0"  ){
+      await this.setState({
+        placowkaRolaConflict : 'Nie można dodać '+this.state.rola+' do placówki'
+      });
+    }
+    if (this.state.rola == "PracownikPlacówki" && this.state.placowka == "0" ||
+      this.state.rola == "KierownikPlacówki" && this.state.placowka == "0"){
+        await this.setState({
+        placowkaRolaConflict : 'Nie można dodać '+this.state.rola+' do centrali'
+      });
+    }
+    
+    if (this.validateForm(this.state.errors) && this.state.placowkaRolaConflict.length==0) {
       this.editKonto({
         imiona: this.state.imiona,
         nazwisko: this.state.nazwisko,
@@ -227,6 +258,7 @@ class KontaForm extends React.Component{
         errors={this.state.errors}
         placowkaExists={this.state.placowkaExists}
         loginExists={this.state.loginExists}
+        placowkaRolaConflict={this.state.placowkaRolaConflict}
         rola={this.state.rola}
         handleChange={this.handleChange}
         changeIsAdding={this.props.changeIsAdding}

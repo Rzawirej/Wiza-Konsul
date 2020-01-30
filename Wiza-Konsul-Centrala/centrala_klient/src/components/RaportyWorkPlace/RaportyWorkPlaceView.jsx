@@ -14,8 +14,8 @@ const RaportyWorkPlaceView = (props) => {
                 <Form.Group widths='equal'>
                     <Form.Field inline control='select' name="okresCzasu" onChange={handleChange}>
                         <option value='15Minut'>15 minut</option>
-                        <option value='Godzina' selected="selected">1 godzina</option>
-                        <option value='Dzień'>1 dzień</option>
+                        <option value='Godzina' >1 godzina</option>
+                        <option value='Dzień' selected="selected">1 dzień</option>
                         <option value='Tydzień'>1 tydzień</option>
                     </Form.Field>
                     <Button type="submit" value="Generuj" >Generuj</Button>

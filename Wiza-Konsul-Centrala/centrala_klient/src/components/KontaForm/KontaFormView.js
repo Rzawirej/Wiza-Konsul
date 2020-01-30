@@ -17,6 +17,7 @@ const KontaFormView = (props) => {
         rola,
         placowkaExists,
         loginExists,
+        placowkaRolaConflict,
         handleChange,
         changeIsAdding,
         handleLostFocus,
@@ -58,6 +59,7 @@ const KontaFormView = (props) => {
         </Form.Field>
         <span style={errorStyle}>{errors.placowka}</span>
         <span style={errorStyle}>{placowkaExists}</span>
+        <span style={errorStyle}>{placowkaRolaConflict}</span>
         
         <Form.Field inline label='Rola' control='select' value={rola} name="rola" onChange={handleChange}>
           <option value='PracownikPlacówki'>Pracownik Placówki</option>
@@ -66,8 +68,10 @@ const KontaFormView = (props) => {
           <option value='AdministratorCentrali'>Administrator Centrali</option>
         </Form.Field>
         
+
         <Button type="submit" value="Zapisz" >Zapisz</Button>
         <Button onClick={changeIsAdding}>Anuluj </Button>
+        
         
       </Form>
     );

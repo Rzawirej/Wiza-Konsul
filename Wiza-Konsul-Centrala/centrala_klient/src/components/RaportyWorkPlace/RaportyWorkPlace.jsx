@@ -7,7 +7,7 @@ class RaportyWorkPlace extends React.Component {
         super(props)
         this.state = {
             generated: false,
-            okresCzasu: 'Godzina',
+            okresCzasu: 'Dzień',
             raport: {}
         }
         this.handleChange = this.handleChange.bind(this);
@@ -40,7 +40,7 @@ class RaportyWorkPlace extends React.Component {
                 break;
         }
 
-        const response = await axios.get('/przesylki', {
+        const response = await axios.get('/raporty', {
             params: {
                 okres: this.state.okresCzasu
             }
