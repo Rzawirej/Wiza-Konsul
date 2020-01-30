@@ -72,6 +72,12 @@ module.exports = {
             if(konto == undefined){
                 return res.status(404).send('Nie ma takiego konta');
             }
+            axios.defaults.baseURL = 'http://localhost:5001/api';
+            try {
+                await axios.delete('/konta/' + req.params.login, req.body);
+            } catch (e) {
+                console.log(JSON.parse(JSON.stringify(e)));
+            }
             res.send(konto);
         } catch (e) {
             res.status(500).send('Error occurred');
@@ -107,6 +113,12 @@ module.exports = {
                     new: true
                 }
             );
+            axios.defaults.baseURL = 'http://localhost:5001/api';
+            try {
+                await axios.put('/konta/'+req.body.login, req.body);
+            } catch (e) {
+                console.log(JSON.parse(JSON.stringify(e)));
+            }
             res.status(200).send(newKonto);
         } catch (e) {
             console.log(e);

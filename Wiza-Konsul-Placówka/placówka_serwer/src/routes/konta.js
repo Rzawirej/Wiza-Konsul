@@ -15,4 +15,12 @@ router
     //  .get(autho)
     .get(kontaController.getAllKonta);
 
+router
+    .route('/:login')
+    .delete(kontaController.deleteKonto);
+
+router
+    .route('/:login')
+    .put(kontaController.editKonto);
+
 module.exports = router;
